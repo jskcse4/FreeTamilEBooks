@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>    
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <!-- ListRow Left sied image -->
+
+    <RelativeLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:background="@drawable/image_bg"
+        android:padding="3dip" >
+
+        <ImageView
+            android:id="@+id/ivBookImage"
+            android:layout_width="60dip"
+            android:layout_height="80dip"
+            android:contentDescription="@string/imageview" />
+
+        <ProgressBar
+            android:id="@+id/ivProgress"
+            style="?android:attr/progressBarStyleSmallTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+        
+    </RelativeLayout>
+
+    <!-- Title Of Book -->
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/txtAuthor"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="@string/bookname"
+        android:textColor="@color/txtTitleColor"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <!-- Author Name -->
+
+    <TextView
+        android:id="@+id/txtAuthor"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtTitle"
+        android:layout_marginTop="1dp"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="@string/author"
+        android:textColor="@color/txtAuthorColor"
+        android:textSize="12sp" />
+
+    <!-- Rightend Arrow -->
+
+    <ImageView
+        android:id="@+id/ivLefticon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/imageview"
+        android:src="@drawable/arrow" />
+	</RelativeLayout>
