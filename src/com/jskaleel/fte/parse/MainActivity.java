@@ -140,14 +140,17 @@ public class MainActivity extends Activity {
 			{
 				gridView.setVisibility(View.GONE);
 				new listUrlParseTask().execute();
-				ivListButton.setEnabled(false);
+				ivListButton.setClickable(false);
+				ivGridButton.setClickable(true);
+				
 			}
 			break;
 			case R.id.ivGridButton:
 			{
 				list.setVisibility(View.GONE);
 				new gridUrlParseTask().execute();
-				ivGridButton.setEnabled(false);
+				ivGridButton.setClickable(false);
+				ivListButton.setClickable(true);
 			}
 			break;
 			}
@@ -206,7 +209,6 @@ public class MainActivity extends Activity {
 			ivGridButton.setEnabled(true);
 		}
 	}
-
 
 	class listUrlParseTask extends AsyncTask<Void, Void, Void> {
 		boolean success = false;
