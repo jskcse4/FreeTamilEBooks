@@ -45,32 +45,7 @@ public class MainActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		list=(ListView)findViewById(R.id.list);
-		/*try {
-        	saxParser=SAXParserFactory.newInstance().newSAXParser();
-			is=new DefaultHttpClient().execute(
-					new HttpGet(xmlContent)).getEntity().getContent();
-			saxParser.parse(is, new XMLHelper());
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.d("FTE","1------>"+e);
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.d("FTE","2------>"+e);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.d("FTE","3------>"+e);
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.d("FTE","4------>"+e);
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.d("FTE","5------>"+e);
-		}*/
+
 		new urlparseTask().execute();
 		Log.d("FTE", "List updated..."+list);
 

@@ -36,10 +36,6 @@ import com.squareup.picasso.Picasso;
 	private String title, imageURL, epub;
 	private Typeface tf;
 
-	
-//	SharedPreferences preferenceManager;
-//	DownloadManager downloadManager;
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,11 +43,6 @@ import com.squareup.picasso.Picasso;
 		setContentView(R.layout.single_list_item);
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-//		preferenceManager = PreferenceManager.getDefaultSharedPreferences(this);
-//		downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
-
-		// getting intent data
 		Intent in = getIntent();
 
 		title = in.getStringExtra(KEY_TITLE);
