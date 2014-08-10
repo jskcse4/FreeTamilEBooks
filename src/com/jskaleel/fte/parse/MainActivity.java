@@ -73,48 +73,6 @@ public class MainActivity extends Activity {
 
 	private void setupEvents() {
 		// TODO Auto-generated method stub
-		// Click event for single list row
-
-		/*gridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO Auto-generated method stub
-				String title = ((TextView) view.findViewById(R.id.txtTitle)).getText().toString();
-				Log.d("FTE","Title------>"+title);
-				String img_url = ((ImageView) view.findViewById(R.id.ivBookImage)).getTag().toString();
-				Log.d("FTE","Img-URL------>"+img_url);
-				String epub_url = ((ImageView) view.findViewById(R.id.ivLefticon)).getTag().toString();
-				Log.d("FTE","Epub-URL------>"+epub_url);
-				Log.d("FreeTamilEbooks","Values-----> "+"Image Url--->"+img_url+"== Epub Url--->"+epub_url);
-				Intent in = new Intent(getApplicationContext(), SingleItemActivity.class);
-				in.putExtra("title", title);
-				in.putExtra("image", img_url);
-				in.putExtra("epub", epub_url);
-				startActivity(in);
-			}
-		});
-
-		list.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				String title = ((TextView) view.findViewById(R.id.txtTitle)).getText().toString();
-				Log.d("FTE","Title------>"+title);
-				String author = ((TextView) view.findViewById(R.id.txtAuthor)).getText().toString();
-				Log.d("FTE","Author------>"+author);
-				String img_url = ((ImageView) view.findViewById(R.id.ivBookImage)).getTag().toString();
-				Log.d("FTE","Img-URL------>"+img_url);
-				String epub_url = ((ImageView) view.findViewById(R.id.ivLefticon)).getTag().toString();
-				Log.d("FTE","Epub-URL------>"+epub_url);
-				Log.d("FreeTamilEbooks","Values-----> "+title+"--"+author+"--"+img_url+"--"+epub_url);
-				Intent in = new Intent(getApplicationContext(), SingleItemActivity.class);
-				in.putExtra("title", title);
-				in.putExtra("author", author);
-				in.putExtra("image", img_url);
-				in.putExtra("epub", epub_url);
-				startActivity(in);
-			}
-		});*/
-
 		gridView.setOnItemClickListener(gridviewListener);
 		list.setOnItemClickListener(viewListener);
 		ivGridButton.setOnClickListener(layoutView);
@@ -182,12 +140,14 @@ public class MainActivity extends Activity {
 			{
 				gridView.setVisibility(View.GONE);
 				new listUrlParseTask().execute();
+				ivListButton.setEnabled(false);
 			}
 			break;
 			case R.id.ivGridButton:
 			{
 				list.setVisibility(View.GONE);
 				new gridUrlParseTask().execute();
+				ivGridButton.setEnabled(false);
 			}
 			break;
 			}
