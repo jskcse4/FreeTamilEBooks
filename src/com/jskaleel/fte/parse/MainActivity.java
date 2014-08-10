@@ -141,8 +141,7 @@ public class MainActivity extends Activity {
 				gridView.setVisibility(View.GONE);
 				new listUrlParseTask().execute();
 				ivListButton.setClickable(false);
-				ivGridButton.setClickable(true);
-				
+				ivGridButton.setClickable(true);	
 			}
 			break;
 			case R.id.ivGridButton:
