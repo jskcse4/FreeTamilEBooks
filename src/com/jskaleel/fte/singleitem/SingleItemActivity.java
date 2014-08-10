@@ -43,6 +43,7 @@ import com.squareup.picasso.Picasso;
 		setContentView(R.layout.single_list_item);
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        
 		Intent in = getIntent();
 
 		title = in.getStringExtra(KEY_TITLE);
@@ -69,19 +70,16 @@ import com.squareup.picasso.Picasso;
 	private void setupDefaults() {
 		// TODO Auto-generated method stub
 		Picasso.with(getApplicationContext()).load(imageURL).into(lblImage, new Callback(){
-
 			@Override
 			public void onError() {
 				// TODO Auto-generated method stub
 				ivProgress.setVisibility(View.GONE);
 			}
-
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
 				ivProgress.setVisibility(View.GONE);
 			}
-
 		});
 		dwnldButton.setTypeface(tf);
 		dwnldButton.setText("Download \"" + title + "\" epub");

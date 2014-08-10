@@ -35,20 +35,18 @@ public class SplashScreen extends Activity {
 			public void run() {
 				// This method will be executed once the timer is over
 				// Start your app main activity
-				ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-
-				if ( conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED 
-				    || conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING ) {
+				ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo info = cm.getActiveNetworkInfo();
+				if(info != null && info.isConnectedOrConnecting()){
 					Intent i = new Intent(SplashScreen.this, MainActivity.class);
-					
 					Log.d("TamilFreeEbooks","Network Connected");
 					startActivity(i);
 				}
-				else if ( conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED 
-				    || conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
+				else {
 					Toast.makeText(getApplicationContext(), "Network Error : Please " +
 							"Check your Network Connection", Toast.LENGTH_LONG).show();
 					Log.d("TamilFreeEbooks","Network Not Connected");
+					finish();
 				}
 
 				// close this activity
