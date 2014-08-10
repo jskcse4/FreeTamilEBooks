@@ -245,7 +245,8 @@ public class MainActivity extends Activity {
 				Log.d("FTE","5------>"+e);
 			}
 			if(!success) {
-				Toast.makeText(getApplicationContext(), "Unable to fetch Data", Toast.LENGTH_LONG).show();
+				Toast.makeText(MainActivity.this, "Unable to fetch Data", Toast.LENGTH_LONG).show();
+				finish();
 			}
 			Log.d("FTE", "Parsing Done..."+is);
 			return null;
