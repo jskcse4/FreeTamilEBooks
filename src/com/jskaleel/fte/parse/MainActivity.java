@@ -62,6 +62,7 @@ public class MainActivity extends Activity {
 		ivListButton = (ImageView) findViewById(R.id.ivListButton);
 		ivGridButton = (ImageView) findViewById(R.id.ivGridButton);
 		list.setVisibility(View.VISIBLE);
+		ivListButton.setClickable(false);
 		gridView.setVisibility(View.GONE);
 	}
 

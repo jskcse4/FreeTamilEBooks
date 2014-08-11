@@ -32,6 +32,7 @@ import com.squareup.picasso.Picasso;
 	private ImageView lblImage;
 	private ProgressBar ivProgress;
 	private ImageView ivTwitter, ivFacebook, ivGplus;
+	private ImageView ivListButton, ivMenuButton, ivGridButton;
 	
 	private String title, imageURL, epub;
 	private Typeface tf;
@@ -65,6 +66,12 @@ import com.squareup.picasso.Picasso;
 		ivTwitter = (ImageView) findViewById(R.id.ivTwitter);
 		ivFacebook = (ImageView) findViewById(R.id.ivFacebook);
 		ivGplus = (ImageView) findViewById(R.id.ivGplus);
+		
+		ivGridButton = (ImageView) findViewById(R.id.ivGridButton);
+		ivListButton = (ImageView) findViewById(R.id.ivListButton);
+		ivMenuButton = (ImageView) findViewById(R.id.ivMenuButton);
+		ivListButton.setEnabled(false);
+		ivGridButton.setEnabled(false);
 	}
 	
 	private void setupDefaults() {
