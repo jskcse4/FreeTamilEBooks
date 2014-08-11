@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="transperent">#00000000</color>
+    <color name="txtTitleColor">#040404</color>
+    <color name="txtAuthorColor">#343434</color>
+    <color name="back_pressed">#24000000</color>
+</resources>
