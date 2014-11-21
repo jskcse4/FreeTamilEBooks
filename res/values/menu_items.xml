@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="menu_items">
+        <item>Home</item>
+        <item>About Us</item>
+        <item>Contributors</item>
+        <item>Contacts</item>
+    </string-array>
+
+</resources>

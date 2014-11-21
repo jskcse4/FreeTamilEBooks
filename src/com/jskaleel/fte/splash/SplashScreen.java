@@ -1,22 +1,25 @@
 package com.jskaleel.fte.splash;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.jskaleel.fte.MainActivity;
 import com.jskaleel.fte.R;
-import com.jskaleel.fte.parse.MainActivity;
+import com.jskaleel.fte.common.ConnectionDetector;
+import com.jskaleel.fte.common.PrintLog;
 
 public class SplashScreen extends Activity {
 
 	// Splash screen timer
 	private static int SPLASH_TIME_OUT = 5000;
+	
+
+	//Connection Detector
+	private Boolean isInternetAvailable = false;
+	private ConnectionDetector connectionDetector;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +38,23 @@ public class SplashScreen extends Activity {
 			public void run() {
 				// This method will be executed once the timer is over
 				// Start your app main activity
-				ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-				NetworkInfo info = cm.getActiveNetworkInfo();
-				if(info != null && info.isConnectedOrConnecting()){
+//				ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//				NetworkInfo info = cm.getActiveNetworkInfo();
+				
+//				if(info != null && info.isConnectedOrConnecting()){
+
+				connectionDetector = new ConnectionDetector(getApplicationContext());
+				isInternetAvailable = connectionDetector.isConnectingToInternet();
+				
+				if(isInternetAvailable) {
 					Intent i = new Intent(SplashScreen.this, MainActivity.class);
-					Log.d("TamilFreeEbooks","Network Connected");
+					PrintLog.debug("TamilFreeEbooks","Network Connected");
 					startActivity(i);
 				}
 				else {
 					Toast.makeText(getApplicationContext(), "Network Error : Please " +
 							"Check your Network Connection", Toast.LENGTH_LONG).show();
-					Log.d("TamilFreeEbooks","Network Not Connected");
+					PrintLog.debug("TamilFreeEbooks","Network Not Connected");
 					finish();
 				}
 
