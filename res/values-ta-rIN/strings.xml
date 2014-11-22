@@ -14,7 +14,7 @@
     <string name="lastname">LastName</string>
     <string name="firstname">FirstName</string>
     <string name="open_dialog">You want to open it?</string>
-    <string name="book_not_found">Book not found!!!\nDo you want to download it?</string>
+    <string name="book_not_found">Book not found!!!\nDo you want to Download it?</string>
     <string name="down_epub">This app required FBReader to read ebooks&#8230;\nDo you want to download it?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

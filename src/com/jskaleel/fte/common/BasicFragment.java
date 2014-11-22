@@ -10,38 +10,22 @@ import android.view.KeyEvent;
 public class BasicFragment extends Fragment{
 
 	public AlertDialog alertDialog;
-//	public ProgressDialog progressDialog;
 	public UIProgressLoading uiProgressLoading;
 	public static Boolean isAppRunningBackground = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		progressDialog = new ProgressDialog(getActivity());
 		uiProgressLoading = new UIProgressLoading();
 		uiProgressLoading.init(getActivity());
 	}
 
-	/*public FragmentActivity getFragmentActivity(){
-		return BasicActivity.this;
-	}*/
-
 	public void dismissProgressDialog()
 	{
-//		if(uiProgressLoading != null){
-//			if(uiProgressLoading.isShowing()){
-				uiProgressLoading.stop();
-//			}
-//		}
+		uiProgressLoading.stop();
 	}
 	public void showProgressDialog(String message){
-//		uiProgressLoading.setMessage(message);
-//		if(!uiProgressLoading.isShowing()){
-			//if(!isFinishing()){
-			uiProgressLoading.showProgressLoading(message);
-			//}
-//		}	
-
+		uiProgressLoading.showProgressLoading(message);
 	}
 
 	@Override
@@ -54,9 +38,7 @@ public class BasicFragment extends Fragment{
 		}
 
 		if(uiProgressLoading != null){
-//			if(uiProgressLoading.isShowing()){
-				uiProgressLoading.stop();
-//			}
+			uiProgressLoading.stop();
 		}
 
 	}

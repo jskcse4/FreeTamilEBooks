@@ -240,7 +240,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			if(filePath!=null){
 				downDialog.dismiss();
 				Toast.makeText(getActivity(), "File Saved at "+savedfilePath, Toast.LENGTH_LONG).show();
-				showOkCancel(savedfilePath);
+				showOkCancel(savedfilePath, 1, singleItem);
 			}
 		}
 	}
@@ -251,7 +251,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		final String url = Uri.parse(singleItem.epub).toString();
 		new TaskDownloadEpub(singleItem).execute(url);
 	}
-	
+
 	@Override
 	public void OpenPressed(BooksHomeListItems singleItem) {
 		// TODO Auto-generated method stub
@@ -260,22 +260,30 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		if(path.exists()) {
 			openBook(path.toString());
 		}else {
-			DownloadPressed(singleItem);
+			showOkCancel(path.toString(), 2, singleItem);
+			//			DownloadPressed(singleItem);
 		}
 	}
-	
+
 	public void shareOnTwitter(BooksHomeListItems singleItem) {
 		// TODO Auto-generated method stub
 
 	}
-	public void showOkCancel(final String filePath) {
-		// TODO Auto-generated method stub
+	public void showOkCancel(final String filePath, final int from, final BooksHomeListItems singleItem) {	// from = 1 --> request to OpenBook
+		// TODO Auto-generated method stub																													// from = 2 --> request to start download
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
 
 		// Setting Dialog Title
 		alertDialog.setTitle(getResources().getString(R.string.app_name));
+
 		// Setting Dialog Message
-		alertDialog.setMessage(getResources().getString(R.string.open_dialog));
+		if(from == 1) {
+			alertDialog.setMessage(getResources().getString(R.string.open_dialog));
+		}else if(from == 2) {
+			alertDialog.setMessage(getResources().getString(R.string.book_not_found));
+		}else if(from == 3) {
+			alertDialog.setMessage(getResources().getString(R.string.down_epub));
+		}
 
 		// Setting Icon to Dialog
 		alertDialog.setIcon(R.drawable.ic_launcher);
@@ -283,7 +291,13 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		// Setting Positive "Yes" Button
 		alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int which) {
-				openBook(filePath);
+				if(from == 1) {
+					openBook(filePath);
+				}else if(from == 2) {
+					DownloadPressed(singleItem);
+				}else if(from == 3) {
+					downloadIt("org.geometerplus.zlibrary.ui.android");
+				}
 			}
 		});
 
@@ -314,12 +328,14 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			try {
 				startActivity(intent);
 			} catch(ActivityNotFoundException e) {
-				downloadIt("org.geometerplus.zlibrary.ui.android");
+//				showAlertDialog();
+//				downloadIt("org.geometerplus.zlibrary.ui.android");
+				showOkCancel("", 3, null);
 			}
 		}
 		PrintLog.debug(TAG, "FilePath-->"+filePath);
 	}
-	
+
 	private void downloadIt(String packageName) {
 		// TODO Auto-generated method stub
 		Uri uri = Uri.parse("market://search?q=" + packageName);

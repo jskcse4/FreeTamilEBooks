@@ -43,7 +43,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 		this.fragmentHome	=	fragmentHome;
 		this.context				=	context;
 
-		SwipeLength				= FTEDevice.convertDpToPx(110, context);
+		SwipeLength				= FTEDevice.convertDpToPx(100, context);
 	}
 
 	@Override
