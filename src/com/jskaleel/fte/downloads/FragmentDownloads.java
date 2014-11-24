@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.jskaleel.fte.R;
 import com.jskaleel.fte.common.BasicFragment;
+import com.jskaleel.fte.common.PrintLog;
 
 public class FragmentDownloads extends BasicFragment {
 
@@ -102,11 +103,13 @@ public class FragmentDownloads extends BasicFragment {
 
 	public void OpenBook(String path) {
 		// TODO Auto-generated method stub
-		File file = new File(path);
+		File file = new File(root+path);
+		
+		PrintLog.debug(TAG, "jsk-->Path-->"+path+"-->File-->"+file);
 		
 		if (file.isDirectory()) {
 			if(file.canRead()){
-				getDir(path);
+				getDir(file.toString());
 			} else{
 				new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_launcher).setTitle("[" + file.getName() + "] folder can't be read!")
 				.setPositiveButton("Ok", null).show();	
