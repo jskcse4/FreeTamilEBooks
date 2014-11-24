@@ -25,10 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jskaleel.fte.common.PrintLog;
+import com.jskaleel.fte.downloads.FragmentDownloads;
 import com.jskaleel.fte.fragment.FragmentAboutUs;
 import com.jskaleel.fte.fragment.FragmentContact;
 import com.jskaleel.fte.fragment.FragmentContributors;
-import com.jskaleel.fte.fragment.downloads.FragmentDownloads;
 import com.jskaleel.fte.home.FragmentHome;
 import com.jskaleel.fte.layout.MainLayout;
 

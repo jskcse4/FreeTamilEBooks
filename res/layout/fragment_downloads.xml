@@ -3,22 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:padding="5dp"
     android:orientation="vertical" >
     
     <TextView
         android:id="@+id/path"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/txtAuthorColor"
+        android:textSize="14sp" />
 
     <ListView
         android:id="@+id/downloadList"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@android:id/empty"
-        android:layout_width="fill_parent"
+        android:id="@+id/txtempty"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/no_data" />
+        android:text="@string/no_data"
+        android:gravity="center"
+        android:visibility="gone"
+        android:clickable="false"
+        android:textColor="@color/txtAuthorColor"
+        android:textSize="16sp" />
 
 </LinearLayout>
