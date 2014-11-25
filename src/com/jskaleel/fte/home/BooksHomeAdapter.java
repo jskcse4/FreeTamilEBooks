@@ -14,7 +14,6 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -23,6 +22,7 @@ import android.widget.TextView;
 import com.jskaleel.fte.R;
 import com.jskaleel.fte.common.FTEDevice;
 import com.jskaleel.fte.common.OnListItemTouchListener;
+import com.jskaleel.fte.common.TouchHighlightImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -82,12 +82,12 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 		final ItemViewHolder holder;
 		if (convertView == null) {
 			LayoutInflater inflator	 	= (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			layout 									= (View) inflator.inflate(R.layout.list_row, null);
+			layout 									= (View) inflator.inflate(R.layout.books_list_row, null);
 			holder 								= new ItemViewHolder();
 
 			holder.txtBookTitle			= (TextView) layout.findViewById(R.id.txtTitle);
 			holder.txtAuthorName		= (TextView) layout.findViewById(R.id.txtAuthor);
-			holder.ivBookIcon				=	(ImageView) layout.findViewById(R.id.ivBookImage);
+			holder.ivBookIcon				=	(TouchHighlightImageView) layout.findViewById(R.id.ivBookImage);
 			holder.ivProgress				=	(ProgressBar) layout.findViewById(R.id.ivProgress);
 			holder.btnShare			=	(Button) layout.findViewById(R.id.btnDownload);
 
@@ -204,21 +204,8 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 					{
 						ObjectAnimator.ofFloat(holder.baseLayout, "translationX",0).setDuration(500).start();
 					}
-					/*else 
-					{
-						if(homeItemListener!=null)
-							homeItemListener.startActivity(0, position, Constants.RCODE_PHOME_TO_PDETAILS_CAMERA);
-					}*/
 					notifyDataSetChanged();
 				}
-				/*else
-				{
-					if(difference>-5&&difference<5)
-					{
-						if(homeItemListener!=null)
-							homeItemListener.startActivity(0, position, Constants.RCODE_PHOME_TO_PDETAILS_CAMERA);
-					}
-				}*/
 				super.onUp(difference, touchUpX);
 			}
 
@@ -283,6 +270,16 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 				}
 			}
 		});
+		
+		/*holder.ivBookIcon.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(homeItemListener != null) {
+					homeItemListener.BookIconPressed(v, singleItem.image);
+				}
+			}
+		});*/
 
 		holder.btnShare.setOnClickListener(new OnClickListener() {
 			@Override
@@ -295,7 +292,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 
 	public static class ItemViewHolder {
 		private TextView txtBookTitle, txtAuthorName;
-		private ImageView ivBookIcon;
+		private TouchHighlightImageView ivBookIcon;
 		private ProgressBar ivProgress;
 		private Button btnShare;
 
@@ -313,5 +310,4 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {	}
-
 }

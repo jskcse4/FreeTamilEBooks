@@ -23,13 +23,14 @@
             android:text="@string/download"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
+
         <Button
             android:id="@+id/btnOpen"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/btnDown"
+            android:layout_marginTop="5dp"
             android:background="#F75151"
             android:paddingBottom="10dp"
             android:paddingLeft="5dp"
@@ -62,11 +63,12 @@
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/image_bg" >
 
-                <ImageView
+                <com.jskaleel.fte.common.TouchHighlightImageView
                     android:id="@+id/ivBookImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/imageview" />
+                    android:contentDescription="@string/imageview"
+                    android:scaleType="centerCrop" />
 
                 <ProgressBar
                     android:id="@+id/ivProgress"
@@ -88,8 +90,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/thumbnail"
                 android:ellipsize="end"
-                android:singleLine="false"
                 android:maxLines="2"
+                android:singleLine="false"
                 android:text=""
                 android:textColor="@color/txtTitleColor"
                 android:textSize="14sp"
@@ -121,9 +123,8 @@
                 android:layout_alignBottom="@+id/thumbnail"
                 android:layout_alignParentRight="true"
                 android:background="@android:drawable/ic_menu_share"
-                android:visibility="gone"
-                android:padding="5dp" />
-
+                android:padding="5dp"
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 

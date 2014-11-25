@@ -7,39 +7,39 @@ import android.util.TypedValue;
 
 public class FTEDevice {
 
-	public static boolean GTE_GB_9 		= false;
-	public static boolean GTE_GB_10		= false;
+//	public static boolean GTE_GB_9 		= false;
+//	public static boolean GTE_GB_10		= false;
 	
 	public static boolean GTE_HC_11		= false;
-	public static boolean GTE_HC_12		= false;
-	public static boolean GTE_HC_13		= false;
+//	public static boolean GTE_HC_12		= false;
+//	public static boolean GTE_HC_13		= false;
 	
-	public static boolean GTE_ICS_14	= false;
-	public static boolean GTE_ICS_15	= false;
+//	public static boolean GTE_ICS_14		= false;
+//	public static boolean GTE_ICS_15		= false;
 	
-	public static boolean GTE_JB_16		= false;
-	public static boolean GTE_JB_17		= false;
-	public static boolean GTE_JB_18		= false;
+//	public static boolean GTE_JB_16		= false;
+//	public static boolean GTE_JB_17		= false;
+//	public static boolean GTE_JB_18		= false;
 
 	
-	public static boolean PRE_GB_9 		= false;
-	public static boolean PRE_GB_10		= false;
+//	public static boolean PRE_GB_9 		= false;
+//	public static boolean PRE_GB_10		= false;
 	
 	public static boolean PRE_HC_11		= false;
-	public static boolean PRE_HC_12		= false;
-	public static boolean PRE_HC_13		= false;
+//	public static boolean PRE_HC_12		= false;
+//	public static boolean PRE_HC_13		= false;
 	
-	public static boolean PRE_ICS_14	= false;
-	public static boolean PRE_ICS_15	= false;
+//	public static boolean PRE_ICS_14		= false;
+//	public static boolean PRE_ICS_15		= false;
 	
-	public static boolean PRE_JB_16		= false;
-	public static boolean PRE_JB_17		= false;
-	public static boolean PRE_JB_18		= false;
+//	public static boolean PRE_JB_16		= false;
+//	public static boolean PRE_JB_17		= false;
+//	public static boolean PRE_JB_18		= false;
 	
 	static {
 		int version = Build.VERSION.SDK_INT;
 		
-		//2.3.3 to 2.3.7  api level 9 mr1 = 10
+/*		//2.3.3 to 2.3.7  api level 9 mr1 = 10
 		if(version >= VERSION_CODES.GINGERBREAD)
 			GTE_GB_9 = true;
 		else 
@@ -48,7 +48,7 @@ public class FTEDevice {
 		if(version >= VERSION_CODES.GINGERBREAD_MR1)
 			GTE_GB_10 = true;
 		else 
-			PRE_GB_10 = true;
+			PRE_GB_10 = true;*/
 		
 		//3.2 api level 11, mr1=12,mr2=13
 		if(version >= VERSION_CODES.HONEYCOMB)
@@ -56,7 +56,7 @@ public class FTEDevice {
 		else
 			PRE_HC_11 = true;
 		
-		if(version >= VERSION_CODES.HONEYCOMB_MR1)
+		/*if(version >= VERSION_CODES.HONEYCOMB_MR1)
 			GTE_HC_12 = true;
 		else
 			PRE_HC_12 = true;
@@ -91,7 +91,7 @@ public class FTEDevice {
 		if(version>= VERSION_CODES.JELLY_BEAN_MR2)
 			GTE_JB_18 = true;
 		else
-			PRE_JB_18 = true;
+			PRE_JB_18 = true;*/
 		
 		
 		//4.4 Kitkat

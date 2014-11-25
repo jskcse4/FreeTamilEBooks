@@ -21,5 +21,6 @@
     <string name="cancel">Cancel</string>
     <string name="downloading">Downloading&#8230;</string>
     <string name="check_connection">Check your internet connection to use this app</string>
+    <string name="no_data">No Data</string>
 
 </resources>

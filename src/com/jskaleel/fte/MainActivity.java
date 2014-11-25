@@ -28,6 +28,7 @@ import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.fte.fragment.FragmentAboutUs;
 import com.jskaleel.fte.fragment.FragmentContact;
 import com.jskaleel.fte.fragment.FragmentContributors;
+import com.jskaleel.fte.fragment.downloads.FragmentDownloads;
 import com.jskaleel.fte.home.FragmentHome;
 import com.jskaleel.fte.layout.MainLayout;
 
@@ -171,6 +172,8 @@ public class MainActivity extends FragmentActivity {
 			fragment = new FragmentContributors();
 		} else if(selectedItem.compareTo("Contacts") == 0) {
 			fragment = new FragmentContact();
+		}else if(selectedItem.compareTo("Downloads") == 0) {
+			fragment = new FragmentDownloads();
 		}
 
 		if(fragment != null) {

@@ -14,12 +14,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +35,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,6 +46,8 @@ import com.jskaleel.fte.common.BasicFragment;
 import com.jskaleel.fte.common.ConnectionDetector;
 import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.http.HttpGetUrlConnection;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class FragmentHome extends BasicFragment implements HomeItemListener{
 
@@ -55,6 +66,10 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 	private String savedfilePath;
 
+    private int mShortAnimationDuration;
+    private Animator mCurrentAnimator;
+    private ImageView expandedImageView;
+    
 	public FragmentHome() {
 	}
 
@@ -80,9 +95,15 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 		listView = (ListView) rootView.findViewById(R.id.fragment_listview);
 
+        // Load the high-resolution "zoomed-in" image.
+        expandedImageView = (ImageView) rootView.findViewById(R.id.expanded_image);
+
 		bookListArray			=	new ArrayList<BooksHomeListItems>();
 		booksHomeAdapter	=	new BooksHomeAdapter(bookListArray, FragmentHome.this, getActivity());
 		booksHomeAdapter.setListItemListener(FragmentHome.this);
+		
+        // Retrieve and cache the system's default "short" animation time.
+        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 	}
 
 	private void setupDefaults() {
@@ -350,4 +371,118 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			startActivity(i);
 		}
 	}
+
+/*	@SuppressLint("NewApi")
+	@Override
+	public void BookIconPressed(final View v, String bookImage) {
+		// TODO Auto-generated method stub
+
+        // If there's an animation in progress, cancel it immediately and proceed with this one.
+        if (mCurrentAnimator != null) {
+            mCurrentAnimator.cancel();
+        }
+        Picasso.with(getActivity()).load(bookImage).into(expandedImageView, new Callback() {
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void onError() {
+				// TODO Auto-generated method stub
+				expandedImageView.setBackgroundResource(R.drawable.default_img);
+			}
+		});
+
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+
+        v.getGlobalVisibleRect(startBounds);
+        rootView.findViewById(R.id.container).getGlobalVisibleRect(finalBounds, globalOffset);
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
+        float startScale;
+        if ((float) finalBounds.width() / finalBounds.height() > (float) startBounds.width() / startBounds.height()) {
+            startScale = (float) startBounds.height() / finalBounds.height();
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width()) / 2;
+            startBounds.left -= deltaWidth;
+            startBounds.right += deltaWidth;
+        } else {
+            // Extend start bounds vertically
+            startScale = (float) startBounds.width() / finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height()) / 2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom += deltaHeight;
+        }
+
+        v.setAlpha(0f);
+        expandedImageView.setVisibility(View.VISIBLE);
+
+        expandedImageView.setPivotX(0f);
+        expandedImageView.setPivotY(0f);
+
+        AnimatorSet set = new AnimatorSet();
+        set.play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left,finalBounds.left))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top,finalBounds.top))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X, startScale, 1f))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_Y, startScale, 1f));
+        set.setDuration(mShortAnimationDuration);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mCurrentAnimator = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                mCurrentAnimator = null;
+            }
+        });
+        set.start();
+        mCurrentAnimator = set;
+
+        // Upon clicking the zoomed-in image, it should zoom back down to the original bounds
+        // and show the thumbnail instead of the expanded image.
+        final float startScaleFinal = startScale;
+        expandedImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCurrentAnimator != null) {
+                    mCurrentAnimator.cancel();
+                }
+
+                AnimatorSet set = new AnimatorSet();
+                set
+                        .play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left))
+                        .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView, View.SCALE_X, startScaleFinal))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView, View.SCALE_Y, startScaleFinal));
+                set.setDuration(mShortAnimationDuration);
+                set.setInterpolator(new DecelerateInterpolator());
+                set.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        v.setAlpha(1f);
+                        expandedImageView.setVisibility(View.GONE);
+                        mCurrentAnimator = null;
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        v.setAlpha(1f);
+                        expandedImageView.setVisibility(View.GONE);
+                        mCurrentAnimator = null;
+                    }
+                });
+                set.start();
+                mCurrentAnimator = set;
+            }
+        });
+	}*/
 }
