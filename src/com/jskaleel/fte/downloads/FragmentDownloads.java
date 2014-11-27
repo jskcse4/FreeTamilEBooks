@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.jskaleel.fte.R;
 import com.jskaleel.fte.common.BasicFragment;
 import com.jskaleel.fte.common.PrintLog;
+import com.jskaleel.fte.home.BooksHomeListItems;
 
 public class FragmentDownloads extends BasicFragment {
 
@@ -60,7 +63,7 @@ public class FragmentDownloads extends BasicFragment {
 
 	private void setupEvents() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void getDir(String dirPath) {
@@ -104,9 +107,9 @@ public class FragmentDownloads extends BasicFragment {
 	public void OpenBook(String path) {
 		// TODO Auto-generated method stub
 		File file = new File(root+path);
-		
+
 		PrintLog.debug(TAG, "jsk-->Path-->"+path+"-->File-->"+file);
-		
+
 		if (file.isDirectory()) {
 			if(file.canRead()){
 				getDir(file.toString());
@@ -123,10 +126,50 @@ public class FragmentDownloads extends BasicFragment {
 				intent.setDataAndType(Uri.fromFile(file), "application/epub");
 				ComponentName cn = new ComponentName("org.geometerplus.zlibrary.ui.android", "org.geometerplus.android.fbreader.FBReader");
 				intent.setComponent(cn);
-				startActivity(intent);
+				try {
+					startActivity(intent);
+				}catch(ActivityNotFoundException e) {
+					showOkCancel();
+				}
 			}else {
 				showAlertDialog("Invalid file format!!!");
 			}
+		}
+	}
+
+	public void showOkCancel() {	
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+
+		alertDialog.setTitle(getResources().getString(R.string.app_name));
+		alertDialog.setMessage(getResources().getString(R.string.down_epub));
+		alertDialog.setIcon(R.drawable.ic_launcher);
+
+		alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int which) {
+				downloadIt("org.geometerplus.zlibrary.ui.android");
+			}
+		});
+
+		alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		alertDialog.show();
+	}
+	
+	private void downloadIt(String packageName) {
+		// TODO Auto-generated method stub
+		Uri uri = Uri.parse("market://search?q=" + packageName);
+		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+		try {
+			startActivity(intent);
+		} catch (ActivityNotFoundException e) {
+			String url = "https://play.google.com/store/apps/details?id="+packageName;
+			Intent i = new Intent(Intent.ACTION_VIEW);
+			i.setData(Uri.parse(url));
+			startActivity(i);
 		}
 	}
 }

@@ -15,18 +15,12 @@ import org.json.JSONObject;
 import org.json.XML;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,7 +29,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -46,8 +39,6 @@ import com.jskaleel.fte.common.BasicFragment;
 import com.jskaleel.fte.common.ConnectionDetector;
 import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.http.HttpGetUrlConnection;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 public class FragmentHome extends BasicFragment implements HomeItemListener{
 
@@ -182,6 +173,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 	class TaskDownloadEpub extends AsyncTask<String, String, String> {
 		BooksHomeListItems singleItem;
 		ProgressDialog downDialog;
+		
 		private boolean isCancelled = false;
 
 		public TaskDownloadEpub(BooksHomeListItems singleItem) {
@@ -236,6 +228,9 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 							publishProgress(""+(int)((total*100)/lenghtOfFile));
 							output.write(data, 0, count);
 						}else {
+							File file = new File(savedfilePath);
+							file.delete();
+							PrintLog.debug(TAG, "File Deleted Successfully...");
 							return null;
 						}
 					}
@@ -258,7 +253,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 		protected void onPostExecute(String filePath){
 			super.onPostExecute(filePath);
-			if(filePath!=null){
+			if(filePath != null){
 				downDialog.dismiss();
 				Toast.makeText(getActivity(), "File Saved at "+savedfilePath, Toast.LENGTH_LONG).show();
 				showOkCancel(savedfilePath, 1, singleItem);
@@ -294,10 +289,8 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		// TODO Auto-generated method stub																													// from = 2 --> request to start download
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
 
-		// Setting Dialog Title
 		alertDialog.setTitle(getResources().getString(R.string.app_name));
 
-		// Setting Dialog Message
 		if(from == 1) {
 			alertDialog.setMessage(getResources().getString(R.string.open_dialog));
 		}else if(from == 2) {
@@ -306,10 +299,8 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			alertDialog.setMessage(getResources().getString(R.string.down_epub));
 		}
 
-		// Setting Icon to Dialog
 		alertDialog.setIcon(R.drawable.ic_launcher);
 
-		// Setting Positive "Yes" Button
 		alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int which) {
 				if(from == 1) {
@@ -322,15 +313,12 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			}
 		});
 
-		// Setting Negative "NO" Button
 		alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				// Write your code here to invoke NO event
 				dialog.cancel();
 			}
 		});
 
-		// Showing Alert Message
 		alertDialog.show();
 	}
 
@@ -349,8 +337,6 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			try {
 				startActivity(intent);
 			} catch(ActivityNotFoundException e) {
-//				showAlertDialog();
-//				downloadIt("org.geometerplus.zlibrary.ui.android");
 				showOkCancel("", 3, null);
 			}
 		}

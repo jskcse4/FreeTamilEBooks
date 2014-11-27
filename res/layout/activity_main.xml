@@ -14,7 +14,7 @@
             android:id="@+id/activity_main_menu_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F75151"
+            android:background="@color/commun_red"
             android:cacheColorHint="@android:color/transparent"
             android:listSelector="#FF7700" >
         </ListView>
@@ -33,7 +33,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F75151"
+            android:background="@color/commun_red"
             android:orientation="horizontal" >
 
             <RelativeLayout

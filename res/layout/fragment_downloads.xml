@@ -11,12 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/txtAuthorColor"
-        android:textSize="14sp" />
+        android:textStyle="bold"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="16sp" />
+    <View 
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/commun_red" />
 
     <ListView
         android:id="@+id/downloadList"
         android:layout_width="match_parent"
         android:scrollbars="none"
+        android:divider="@color/commun_red"
+        android:dividerHeight="2dp"
         android:listSelector="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"
         android:layout_height="wrap_content" />
