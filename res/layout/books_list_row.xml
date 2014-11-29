@@ -67,8 +67,9 @@
                     android:id="@+id/ivBookImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="3dp"
                     android:contentDescription="@string/imageview"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerInside" />
 
                 <ProgressBar
                     android:id="@+id/ivProgress"
