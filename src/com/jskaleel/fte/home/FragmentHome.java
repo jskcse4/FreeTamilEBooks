@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
-import android.animation.Animator;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -28,9 +27,12 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -39,6 +41,8 @@ import com.jskaleel.fte.common.BasicFragment;
 import com.jskaleel.fte.common.ConnectionDetector;
 import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.http.HttpGetUrlConnection;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class FragmentHome extends BasicFragment implements HomeItemListener{
 
@@ -57,9 +61,12 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 	private String savedfilePath;
 
-    private int mShortAnimationDuration;
-    private Animator mCurrentAnimator;
+/*    private int mShortAnimationDuration;
+    private Animator mCurrentAnimator;*/
+	
     private ImageView expandedImageView;
+    private RelativeLayout imgLayout;
+    private ProgressBar bookProgressBar;
     
 	public FragmentHome() {
 	}
@@ -87,24 +94,33 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		listView = (ListView) rootView.findViewById(R.id.fragment_listview);
 
         // Load the high-resolution "zoomed-in" image.
-        expandedImageView = (ImageView) rootView.findViewById(R.id.expanded_image);
+		imgLayout						=	(RelativeLayout) rootView.findViewById(R.id.imgLayout);
+        expandedImageView 	= (ImageView) rootView.findViewById(R.id.expanded_image);
+        bookProgressBar			=	(ProgressBar) rootView.findViewById(R.id.bookProgressBar);
 
 		bookListArray			=	new ArrayList<BooksHomeListItems>();
 		booksHomeAdapter	=	new BooksHomeAdapter(bookListArray, FragmentHome.this, getActivity());
 		booksHomeAdapter.setListItemListener(FragmentHome.this);
 		
         // Retrieve and cache the system's default "short" animation time.
-        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+//        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 	}
 
 	private void setupDefaults() {
 		// TODO Auto-generated method stub
+		imgLayout.setVisibility(View.GONE);
 		new TaskGetXmlfromUrl().execute();
 	}
 
 	private void setupEvents() {
 		// TODO Auto-generated method stub
-
+		imgLayout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				imgLayout.setVisibility(View.GONE);
+			}
+		});
 	}
 	private class TaskGetXmlfromUrl extends AsyncTask<Void, Void, String>
 	{
@@ -356,6 +372,22 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			i.setData(Uri.parse(url));
 			startActivity(i);
 		}
+	}
+	
+	@Override
+	public void BookIconPressed(final View v, String bookImage) {
+		imgLayout.setVisibility(View.VISIBLE);
+		Picasso.with(getActivity()).load(bookImage).into(expandedImageView, new Callback() {
+			@Override
+			public void onSuccess() {
+				bookProgressBar.setVisibility(View.GONE);
+			}
+			@Override
+			public void onError() {
+				expandedImageView.setBackgroundResource(R.drawable.default_img);
+				bookProgressBar.setVisibility(View.GONE);
+			}
+		});
 	}
 
 /*	@SuppressLint("NewApi")

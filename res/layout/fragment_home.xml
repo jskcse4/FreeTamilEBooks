@@ -7,14 +7,15 @@
     android:padding="5dp" >
 
     <LinearLayout
+        android:id="@+id/listLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:visibility="visible" >
 
         <ListView
             android:id="@+id/fragment_listview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/adLayout"
             android:animationCache="false"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@color/commun_red"
@@ -26,11 +27,28 @@
             android:visibility="visible" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/expanded_image"
+    <RelativeLayout
+        android:id="@+id/imgLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/imageview"
-        android:visibility="invisible" />
+        android:visibility="visible"
+        android:background="@color/book_layout_back" >
+
+        <ImageView
+            android:id="@+id/expanded_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/imageview" />
+
+        <ProgressBar
+            android:id="@+id/bookProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+        
+    </RelativeLayout>
 
 </RelativeLayout>

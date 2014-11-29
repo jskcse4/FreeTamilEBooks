@@ -271,7 +271,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 			}
 		});
 		
-		/*holder.ivBookIcon.setOnClickListener(new OnClickListener() {
+		holder.ivBookIcon.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -279,7 +279,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 					homeItemListener.BookIconPressed(v, singleItem.image);
 				}
 			}
-		});*/
+		});
 
 		holder.btnShare.setOnClickListener(new OnClickListener() {
 			@Override

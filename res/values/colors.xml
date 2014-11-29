@@ -10,5 +10,6 @@
     <color name="menu_view_color">#4D4D4D</color>
     
     <color name="commun_red">#FE0405</color>
+    <color name="book_layout_back">#55000000</color>
 
 </resources>
