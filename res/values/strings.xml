@@ -4,23 +4,38 @@
     <string name="app_name">Free Tamil Ebooks</string>
     <string name="action_settings">Settings</string>
     <string name="imageview">imageview</string>
-    <string name="download">Download</string>
-    <string name="loading_">Loading&#8230;</string>
+    <string name="download">பதிவிறக்கு</string>
+    <string name="loading_">ஏற்றுகிறது&#8230;</string>
     <string name="textdigits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
-    <string name="open">Open</string>
-    <string name="submit">Submit</string>
-    <string name="your_message">Your message</string>
-    <string name="your_email">Your email</string>
-    <string name="lastname">LastName</string>
-    <string name="firstname">FirstName</string>
-    <string name="open_dialog">You want to open it?</string>
-    <string name="book_not_found">Book not found!!!\nDo you want to download it?</string>
-    <string name="down_epub">This app required FBReader to read ebooks&#8230;\nDo you want to download it?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="cancel">Cancel</string>
-    <string name="downloading">Downloading&#8230;</string>
-    <string name="check_connection">Check your internet connection to use this app</string>
-    <string name="no_data">No Books found</string>
+    <string name="open">திற</string>
+    <string name="submit">சமர்ப்பி</string>
+    <string name="your_message">உங்கள் கருத்து</string>
+    <string name="your_email">உங்கள் மின்னஞ்சல்</string>
+    <string name="lastname">கடைசி பெயர்</string>
+    <string name="firstname">முதற் பெயர்</string>
+    <string name="open_dialog">இதை திறக்க வேண்டுமா?</string>
+    <string name="book_not_found">புத்தகம் காணப்படவில்லை!!!\nபதிவிறக்க வேண்டுமா?</string>
+    <string name="down_epub">மின் புத்தகங்களை படிக்க FBReader தேவைப்படுகிறது&#8230;\nபதிவிறக்க வேண்டுமா?</string>
+    <string name="yes">ஆம்</string>
+    <string name="no">இல்லை</string>
+    <string name="cancel">ரத்துசெய்</string>
+    <string name="downloading">பதிவிறக்குகிறது&#8230;</string>
+    <string name="check_connection">இந்த பயன்பாட்டை பயன்படுத்த உங்கள் இணைய இணைப்பை சரிபார்க்கவும்</string>
+    <string name="no_data">புத்தகங்கள் ஏதுமில்லை</string>
 
+    <string-array name="menu_items">
+        <item>Home</item>
+        <item>About Us</item>
+        <item>Contributors</item>
+        <item>Contacts</item>
+        <item>Downloads</item>
+    </string-array>
+    
+    <string-array name="loc_menu_items">
+        <item>முகப்பு</item>
+        <item>எங்களை பற்றி</item>
+        <item>பங்களிப்பாளர்கள்</item>
+        <item>கருத்து</item>
+        <item>பதிவிறக்கங்கள்</item>
+    </string-array>
 </resources>

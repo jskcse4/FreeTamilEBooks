@@ -48,6 +48,7 @@ public class MainActivity extends FragmentActivity {
 	// ListView menu
 	private ListView lvMenu;
 	private String[] lvMenuItems;
+	private String[] locMenuItems;
 
 	// Menu button
 	ImageView btMenu;
@@ -83,11 +84,13 @@ public class MainActivity extends FragmentActivity {
 		// Init menu
 
 		lvMenuItems = getResources().getStringArray(R.array.menu_items);
+		locMenuItems	=	getResources().getStringArray(R.array.loc_menu_items);
 		PrintLog.debug("jsk", "ArraySize--->"+lvMenuItems.length);
 		lvMenu = (ListView) findViewById(R.id.activity_main_menu_listview);
 		//        lvMenu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, lvMenuItems));
 
-		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, lvMenuItems){
+//		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, lvMenuItems){
+			ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, locMenuItems){
 
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
@@ -150,8 +153,9 @@ public class MainActivity extends FragmentActivity {
 	// Perform action when a menu item is clicked
 	private void onMenuItemClick(AdapterView<?> parent, View view, int position, long id) {
 		String selectedItem = lvMenuItems[position];
+		String locStringItem	=	locMenuItems[position];
 		String currentItem = tvTitle.getText().toString();
-		PrintLog.debug("jsk", "Position--->"+position+"-->Title-->"+selectedItem);
+		PrintLog.debug("jsk", "Position--->"+position+"-->Title-->"+selectedItem+"-->Loc String-->"+locStringItem);
 
 		// Do nothing if selectedItem is currentItem
 		if(selectedItem.compareTo(currentItem) == 0) {
@@ -182,7 +186,7 @@ public class MainActivity extends FragmentActivity {
 			ft.commit();
 
 			// Set title accordingly
-			tvTitle.setText(selectedItem);
+			tvTitle.setText(locStringItem);
 		}
 		// Hide menu anyway
 		mainLayout.toggleMenu();
@@ -217,7 +221,9 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (doubleBackToExitPressedOnce) {
+		if (mainLayout.isMenuShown()) {
+            mainLayout.toggleMenu();
+        }else if (doubleBackToExitPressedOnce) {
 			super.onBackPressed();
 			return;
 		}

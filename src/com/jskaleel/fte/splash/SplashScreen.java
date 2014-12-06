@@ -28,7 +28,7 @@ public class SplashScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 
-		Toast.makeText(getApplicationContext(),"Application Under Development", Toast.LENGTH_LONG).show();
+//		Toast.makeText(getApplicationContext(),"Application Under Development", Toast.LENGTH_LONG).show();
 		new Handler().postDelayed(new Runnable() {
 
 			@Override
