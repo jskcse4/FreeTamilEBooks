@@ -31,6 +31,7 @@ import com.jskaleel.fte.fragment.FragmentContact;
 import com.jskaleel.fte.fragment.FragmentContributors;
 import com.jskaleel.fte.home.FragmentHome;
 import com.jskaleel.fte.layout.MainLayout;
+import com.newrelic.agent.android.NewRelic;
 
 // DK 
 // This is my studying about Sliding Menu following Youtube video
@@ -80,6 +81,7 @@ public class MainActivity extends FragmentActivity {
 		mainLayout = (MainLayout)this.getLayoutInflater().inflate(R.layout.activity_main, null);
 		setContentView(mainLayout);
 
+		NewRelic.withApplicationToken( "AA3beba3a57cfaf7192a26d14229084d20f40d355c" ).start(this.getApplication());
 
 		// Init menu
 
