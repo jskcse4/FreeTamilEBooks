@@ -2,7 +2,6 @@ package com.jskaleel.fte.home;
 
 import java.util.ArrayList;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.jskaleel.fte.R;
 import com.jskaleel.fte.common.FTEDevice;
 import com.jskaleel.fte.common.OnListItemTouchListener;
@@ -82,7 +82,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 		final ItemViewHolder holder;
 		if (convertView == null) {
 			LayoutInflater inflator	 	= (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			layout 									= (View) inflator.inflate(R.layout.books_list_row, null);
+			layout 									= (View) inflator.inflate(R.layout.books_list_item, null);
 			holder 								= new ItemViewHolder();
 
 			holder.txtBookTitle			= (TextView) layout.findViewById(R.id.txtTitle);
@@ -119,7 +119,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 		}
 
 		if(singleItem.image != null && !singleItem.image.equalsIgnoreCase("")) {
-			//			StaticAquery.loadProfileImage(context, holder.ivBookIcon, holder.ivProgress, singleItem.image);
+//						StaticAquery.loadProfileImage(context, holder.ivBookIcon, holder.ivProgress, singleItem.image);
 			//			holder.ivProgress.setBackgroundResource(R.drawable.default_img);
 //			new ImageDownloaderTask(holder.ivBookIcon, holder.ivProgress).execute(singleItem.image);
 			Picasso.with(context).load(singleItem.image).into(holder.ivBookIcon, new Callback() {
@@ -135,7 +135,6 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 					holder.ivProgress.setVisibility(View.GONE);
 				}
 			});
-
 		}
 
 		if(!FTEDevice.PRE_HC_11)

@@ -28,6 +28,7 @@
         android:cacheColorHint="@android:color/transparent"
         android:divider="@color/commun_red"
         android:dividerHeight="2dp"
+        android:footerDividersEnabled="true"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none" />
 

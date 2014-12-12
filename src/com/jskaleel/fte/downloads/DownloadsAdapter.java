@@ -52,7 +52,7 @@ public class DownloadsAdapter extends BaseAdapter {
 		final ListViewHolder holder;
 		if (convertView == null) {
 			LayoutInflater inflator	 	= (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			layout 									= (View) inflator.inflate(R.layout.downloads_list_row, null);
+			layout 									= (View) inflator.inflate(R.layout.downloads_list_item, null);
 			holder 								= new ListViewHolder();
 
 			holder.txtBookTitle			= (TextView) layout.findViewById(R.id.txtTitle);

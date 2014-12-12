@@ -304,7 +304,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 	public void showOkCancel(final String filePath, final int from, final BooksHomeListItems singleItem) {	// from = 1 --> request to OpenBook
 		// TODO Auto-generated method stub																													// from = 2 --> request to start download
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-
+		
 		alertDialog.setTitle(getResources().getString(R.string.app_name));
 
 		if(from == 1) {
