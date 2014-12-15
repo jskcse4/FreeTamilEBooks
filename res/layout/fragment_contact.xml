@@ -20,25 +20,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:digits="@string/textdigits"
+            android:background="@drawable/edittext_border"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/firstname"
             android:imeOptions="actionNext"
             android:inputType="text"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             android:singleLine="true" />
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/white_layout_bg" />
 
         <EditText
             android:id="@+id/edtLName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:digits="@string/textdigits"
+            android:background="@drawable/edittext_border"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/lastname"
             android:imeOptions="actionNext"
             android:inputType="text"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -47,11 +56,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameField"
+        android:background="@drawable/edittext_border"
         android:ems="10"
         android:gravity="center"
         android:hint="@string/your_email"
         android:imeOptions="actionNext"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp" />
 
     <EditText
         android:id="@+id/edtMessage"
@@ -59,6 +71,7 @@
         android:layout_height="140dp"
         android:layout_below="@+id/edtMail"
         android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_border"
         android:ems="10"
         android:gravity="top"
         android:hint="@string/your_message"

@@ -1,12 +1,13 @@
 package com.jskaleel.fte.common;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.util.TypedValue;
 
-public class FTEDevice {
-
+public class FTEDevice extends Application {
+	
 //	public static boolean GTE_GB_9 		= false;
 //	public static boolean GTE_GB_10		= false;
 	

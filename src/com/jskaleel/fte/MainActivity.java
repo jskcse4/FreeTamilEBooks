@@ -14,8 +14,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jskaleel.fte.common.FTEDevice;
 import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.fte.downloads.FragmentDownloads;
 import com.jskaleel.fte.fragment.FragmentAboutUs;
@@ -40,7 +41,7 @@ public class MainActivity extends FragmentActivity {
 	private static final String TAG = "MainActivity";
 
 	private static Context context;
-	
+
 	private static int fragmentType;
 
 	public static int getFragmentType() {
@@ -100,8 +101,8 @@ public class MainActivity extends FragmentActivity {
 		lvMenu = (ListView) findViewById(R.id.activity_main_menu_listview);
 		//        lvMenu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, lvMenuItems));
 
-//		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, lvMenuItems){
-			ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, locMenuItems){
+		//		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, lvMenuItems){
+		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, locMenuItems){
 
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
@@ -187,7 +188,7 @@ public class MainActivity extends FragmentActivity {
 		} else if(selectedItem.compareTo("Contributors") == 0) {
 			setFragmentType(2);
 			fragment = new FragmentAboutUs();
-//			fragment = new FragmentContributors();
+			//			fragment = new FragmentContributors();
 		} else if(selectedItem.compareTo("Publish") == 0) {
 			setFragmentType(3);
 			fragment = new FragmentAboutUs();
@@ -209,6 +210,24 @@ public class MainActivity extends FragmentActivity {
 		mainLayout.toggleMenu();
 	}
 
+	@Override
+	public void onBackPressed() {
+		if (mainLayout.isMenuShown()) {
+			mainLayout.toggleMenu();
+		}else if (doubleBackToExitPressedOnce) {
+			super.onBackPressed();
+			return;
+		}
+		this.doubleBackToExitPressedOnce = true;
+		Toast.makeText(this, getString(R.string.txt_exit), Toast.LENGTH_SHORT).show();
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				doubleBackToExitPressedOnce=false;   
+			}
+		}, 2000);
+	}
+
 	/**
 	 * Hides the soft keyboard
 	 */
@@ -224,23 +243,5 @@ public class MainActivity extends FragmentActivity {
 		InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
 		view.requestFocus();
 		inputMethodManager.showSoftInput(view, 0);
-	}
-
-	@Override
-	public void onBackPressed() {
-		if (mainLayout.isMenuShown()) {
-            mainLayout.toggleMenu();
-        }else if (doubleBackToExitPressedOnce) {
-			super.onBackPressed();
-			return;
-		}
-		this.doubleBackToExitPressedOnce = true;
-		Toast.makeText(this, getString(R.string.txt_exit), Toast.LENGTH_SHORT).show();
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				doubleBackToExitPressedOnce=false;   
-			}
-		}, 2000);
 	}
 }

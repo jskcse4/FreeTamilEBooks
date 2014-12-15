@@ -96,19 +96,19 @@ public class FragmentContact extends BasicFragment {
 						if(Message != null && !Message.equalsIgnoreCase("")) {
 							return true;
 						}else {
-							showAlertDialog("Message should not be empty!!!");
+							showAlertDialog(getString(R.string.message_alert));
 						}
 					}else {
-						showAlertDialog("Not an email!!!");
+						showAlertDialog(getString(R.string.nomail_alert));
 					}
 				}else {
-					showAlertDialog("Email should not be empty!!!");
+					showAlertDialog(getString(R.string.mail_alert));
 				}
 			}else {
-				showAlertDialog("LastName should not be empty!!!");
+				showAlertDialog(getString(R.string.lastname_alert));
 			}
 		}else {
-			showAlertDialog("FirtName should not be empty!!!");
+			showAlertDialog(getString(R.string.firstname_alert));
 		}
 		return false;
 	}

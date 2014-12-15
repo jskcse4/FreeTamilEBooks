@@ -6,7 +6,6 @@
     <string name="imageview">imageview</string>
     <string name="download">பதிவிறக்கு</string>
     <string name="loading_">ஏற்றுகிறது&#8230;</string>
-    <string name="textdigits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="open">திற</string>
     <string name="submit">சமர்ப்பி</string>
     <string name="your_message">உங்கள் கருத்து</string>
@@ -43,4 +42,11 @@
         <item>கருத்து</item>
         <item>பதிவிறக்கங்கள்</item>
     </string-array>
+    
+    <string name="firstname_alert">முதற் பெயர் காலியாக இருக்கக் கூடாது</string>
+    <string name="lastname_alert">கடைசி பெயர் காலியாக இருக்கக் கூடாது</string>
+    <string name="mail_alert">மின்னஞ்சல் காலியாக இருக்கக் கூடாது</string>
+    <string name="nomail_alert">சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்!!!</string>
+    <string name="message_alert">உங்கள் கருத்தை உள்ளிடவும்</string>
+   
 </resources>
