@@ -28,7 +28,6 @@ import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.fte.downloads.FragmentDownloads;
 import com.jskaleel.fte.fragment.FragmentAboutUs;
 import com.jskaleel.fte.fragment.FragmentContact;
-import com.jskaleel.fte.fragment.FragmentContributors;
 import com.jskaleel.fte.home.FragmentHome;
 import com.jskaleel.fte.layout.MainLayout;
 import com.newrelic.agent.android.NewRelic;
@@ -41,6 +40,16 @@ public class MainActivity extends FragmentActivity {
 	private static final String TAG = "MainActivity";
 
 	private static Context context;
+	
+	private static int fragmentType;
+
+	public static int getFragmentType() {
+		return fragmentType;
+	}
+
+	public static void setFragmentType(int fragmentType) {
+		MainActivity.fragmentType = fragmentType;
+	}
 
 	// The MainLayout which will hold both the sliding menu and our main content
 	// Main content will holds our Fragment respectively
@@ -81,7 +90,7 @@ public class MainActivity extends FragmentActivity {
 		mainLayout = (MainLayout)this.getLayoutInflater().inflate(R.layout.activity_main, null);
 		setContentView(mainLayout);
 
-		NewRelic.withApplicationToken( "AA3beba3a57cfaf7192a26d14229084d20f40d355c" ).start(this.getApplication());
+		NewRelic.withApplicationToken(getString(R.string.new_relic_key)).start(this.getApplication());
 
 		// Init menu
 
@@ -173,10 +182,16 @@ public class MainActivity extends FragmentActivity {
 		if(selectedItem.compareTo("Home") == 0) {
 			fragment = new FragmentHome();
 		} else if(selectedItem.compareTo("About Us") == 0) {
+			setFragmentType(1);
 			fragment = new FragmentAboutUs();
 		} else if(selectedItem.compareTo("Contributors") == 0) {
-			fragment = new FragmentContributors();
-		} else if(selectedItem.compareTo("Contacts") == 0) {
+			setFragmentType(2);
+			fragment = new FragmentAboutUs();
+//			fragment = new FragmentContributors();
+		} else if(selectedItem.compareTo("Publish") == 0) {
+			setFragmentType(3);
+			fragment = new FragmentAboutUs();
+		}else if(selectedItem.compareTo("Contacts") == 0) {
 			fragment = new FragmentContact();
 		}else if(selectedItem.compareTo("Downloads") == 0) {
 			fragment = new FragmentDownloads();
@@ -193,16 +208,6 @@ public class MainActivity extends FragmentActivity {
 		// Hide menu anyway
 		mainLayout.toggleMenu();
 	}
-
-	/*    @Override
-    public void onBackPressed() {
-        if (mainLayout.isMenuShown()) {
-            mainLayout.toggleMenu();
-        }
-        else {
-            super.onBackPressed();
-        }
-    }*/
 
 	/**
 	 * Hides the soft keyboard
@@ -230,7 +235,7 @@ public class MainActivity extends FragmentActivity {
 			return;
 		}
 		this.doubleBackToExitPressedOnce = true;
-		Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.txt_exit), Toast.LENGTH_SHORT).show();
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {

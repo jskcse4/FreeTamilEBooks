@@ -22,11 +22,15 @@
     <string name="downloading">பதிவிறக்குகிறது&#8230;</string>
     <string name="check_connection">இந்த பயன்பாட்டை பயன்படுத்த உங்கள் இணைய இணைப்பை சரிபார்க்கவும்</string>
     <string name="no_data">புத்தகங்கள் ஏதுமில்லை</string>
+    
+    <string name="new_relic_key">AA3beba3a57cfaf7192a26d14229084d20f40d355c</string>
+    <string name="txt_exit">வெளியேற மீண்டும் அழுத்தவும்</string>
 
     <string-array name="menu_items">
         <item>Home</item>
         <item>About Us</item>
         <item>Contributors</item>
+        <item>Publish</item>
         <item>Contacts</item>
         <item>Downloads</item>
     </string-array>
@@ -35,6 +39,7 @@
         <item>முகப்பு</item>
         <item>எங்களை பற்றி</item>
         <item>பங்களிப்பாளர்கள்</item>
+        <item>படைப்புகளை வெளியிட</item>
         <item>கருத்து</item>
         <item>பதிவிறக்கங்கள்</item>
     </string-array>
