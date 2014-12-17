@@ -26,8 +26,7 @@
             android:hint="@string/firstname"
             android:imeOptions="actionNext"
             android:inputType="text"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
+            android:padding="8dp"
             android:singleLine="true" />
 
         <View
@@ -46,8 +45,7 @@
             android:hint="@string/lastname"
             android:imeOptions="actionNext"
             android:inputType="text"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
+            android:padding="8dp"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -62,8 +60,7 @@
         android:hint="@string/your_email"
         android:imeOptions="actionNext"
         android:inputType="textEmailAddress"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp" />
+        android:padding="8dp" />
 
     <EditText
         android:id="@+id/edtMessage"

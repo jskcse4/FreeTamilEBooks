@@ -31,7 +31,8 @@
         </activity>
         <activity
             android:name="com.jskaleel.fte.MainActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="adjustPan|adjustResize" >
         </activity>
     </application>
 
