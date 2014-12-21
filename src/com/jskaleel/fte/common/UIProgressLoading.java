@@ -11,7 +11,7 @@ public class UIProgressLoading {
 		activity = context;
 	}
 	public  void showProgressLoading(String msg){
-		progressLoading.getDialog(msg, true);
+		progressLoading.getDialog(msg, false);
 		if(progressLoading != null && progressLoading.isShowing()){
 			progressLoading.dismiss();
 		}
