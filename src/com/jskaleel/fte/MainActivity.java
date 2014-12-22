@@ -14,8 +14,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -24,14 +24,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jskaleel.fte.common.FTEDevice;
 import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.fte.downloads.FragmentDownloads;
 import com.jskaleel.fte.fragment.FragmentAboutUs;
 import com.jskaleel.fte.fragment.FragmentContact;
 import com.jskaleel.fte.home.FragmentHome;
 import com.jskaleel.fte.layout.MainLayout;
-import com.newrelic.agent.android.NewRelic;
 
 // DK 
 // This is my studying about Sliding Menu following Youtube video
@@ -90,8 +88,6 @@ public class MainActivity extends FragmentActivity {
 		// Inflate the mainLayout
 		mainLayout = (MainLayout)this.getLayoutInflater().inflate(R.layout.activity_main, null);
 		setContentView(mainLayout);
-
-		NewRelic.withApplicationToken(getString(R.string.new_relic_key)).start(this.getApplication());
 
 		// Init menu
 

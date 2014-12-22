@@ -2,7 +2,6 @@ package com.jskaleel.fte.home;
 
 import java.util.ArrayList;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.jskaleel.fte.R;
 import com.jskaleel.fte.common.FTEDevice;
 import com.jskaleel.fte.common.OnListItemTouchListener;
@@ -43,7 +43,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 		this.fragmentHome	=	fragmentHome;
 		this.context				=	context;
 
-		SwipeLength				= FTEDevice.convertDpToPx(100, context);
+		SwipeLength				= FTEDevice.convertDpToPx(110, context);
 	}
 
 	@Override

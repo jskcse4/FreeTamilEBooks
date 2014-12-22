@@ -30,5 +30,6 @@
 	<natures>
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>com.newrelic.agent.android.eclipse.plugin.NewRelicNature</nature>
 	</natures>
 </projectDescription>
