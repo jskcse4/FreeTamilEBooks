@@ -22,10 +22,7 @@ public class HttpGetUrlConnection {
 		String content = null;
 
 		try {
-			if(api_url != null){
-				api_url += (api_url.contains("?") ? "&" : "?") + "platform=android";
-			}
-			
+						
 			StringBuilder sb = new StringBuilder(api_url);
 
 			HttpURLConnection.setFollowRedirects(true);

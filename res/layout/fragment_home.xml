@@ -50,5 +50,24 @@
             android:layout_centerVertical="true" />
         
     </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/helpLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/book_layout_back" >
+        <TextView
+            android:id="@+id/txtSwipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="19sp"
+            android:drawableLeft="@drawable/left"
+            android:drawableRight="@drawable/right"
+            android:textStyle="italic"
+            android:textColor="@color/white"
+            android:text="Swipe on listview to get download \n and open options" />
+    </RelativeLayout>
 
 </RelativeLayout>

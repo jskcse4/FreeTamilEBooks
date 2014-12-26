@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.util.TypedValue;
 
+import com.jskaleel.fte.AppPreference;
+
 public class FTEDevice extends Application {
 	
 //	public static boolean GTE_GB_9 		= false;
@@ -29,6 +31,8 @@ public class FTEDevice extends Application {
 	public static boolean PRE_HC_11		= false;
 //	public static boolean PRE_HC_12		= false;
 //	public static boolean PRE_HC_13		= false;
+
+	private static AppPreference mUserPrefrence;
 	
 //	public static boolean PRE_ICS_14		= false;
 //	public static boolean PRE_ICS_15		= false;
@@ -97,10 +101,18 @@ public class FTEDevice extends Application {
 		
 		//4.4 Kitkat
 	}
-	
+
 	public static int convertDpToPx(int dp,Context context)
 	{
 		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,  context.getResources().getDisplayMetrics());
 		return (int)px;
+	}
+	
+	public static AppPreference getUserPrefs(Context context){
+		if(mUserPrefrence == null){
+			mUserPrefrence = new AppPreference(context);
+		}
+
+		return mUserPrefrence;
 	}
 }

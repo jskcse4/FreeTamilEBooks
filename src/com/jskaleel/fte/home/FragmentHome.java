@@ -36,9 +36,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.jskaleel.fte.AppPreference;
 import com.jskaleel.fte.R;
 import com.jskaleel.fte.common.BasicFragment;
 import com.jskaleel.fte.common.ConnectionDetector;
+import com.jskaleel.fte.common.FTEDevice;
 import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.http.HttpGetUrlConnection;
 import com.squareup.picasso.Callback;
@@ -61,13 +63,15 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 	private String savedfilePath;
 
-/*    private int mShortAnimationDuration;
+	/*    private int mShortAnimationDuration;
     private Animator mCurrentAnimator;*/
+
+	private ImageView expandedImageView;
+	private RelativeLayout imgLayout;
+	private ProgressBar bookProgressBar;
 	
-    private ImageView expandedImageView;
-    private RelativeLayout imgLayout;
-    private ProgressBar bookProgressBar;
-    
+	private RelativeLayout helpLayout;
+
 	public FragmentHome() {
 	}
 
@@ -78,7 +82,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 		connectionDetector = new ConnectionDetector(getActivity());
 		isInternetAvailable = connectionDetector.isConnectingToInternet();
-
+		
 		if(isInternetAvailable) {
 			init();
 			setupDefaults();
@@ -93,35 +97,50 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 		listView = (ListView) rootView.findViewById(R.id.fragment_listview);
 
-        // Load the high-resolution "zoomed-in" image.
+		// Load the high-resolution "zoomed-in" image.
 		imgLayout						=	(RelativeLayout) rootView.findViewById(R.id.imgLayout);
-        expandedImageView 	= (ImageView) rootView.findViewById(R.id.expanded_image);
-        bookProgressBar			=	(ProgressBar) rootView.findViewById(R.id.bookProgressBar);
+		expandedImageView 	= (ImageView) rootView.findViewById(R.id.expanded_image);
+		bookProgressBar			=	(ProgressBar) rootView.findViewById(R.id.bookProgressBar);
 
 		bookListArray			=	new ArrayList<BooksHomeListItems>();
 		booksHomeAdapter	=	new BooksHomeAdapter(bookListArray, FragmentHome.this, getActivity());
 		booksHomeAdapter.setListItemListener(FragmentHome.this);
 		
-        // Retrieve and cache the system's default "short" animation time.
-//        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+		helpLayout	=	(RelativeLayout) rootView.findViewById(R.id.helpLayout);
+
+		// Retrieve and cache the system's default "short" animation time.
+		//        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 	}
 
 	private void setupDefaults() {
 		// TODO Auto-generated method stub
+		helpLayout.setVisibility(View.GONE);
+		if(FTEDevice.getUserPrefs(getActivity()).getIsOpenFirstTime()) {
+			helpLayout.setVisibility(View.VISIBLE);
+			FTEDevice.getUserPrefs(getActivity()).setIsOpenFirstTime(false);
+		}
+		
 		imgLayout.setVisibility(View.GONE);
 		new TaskGetXmlfromUrl().execute();
 	}
 
 	private void setupEvents() {
 		// TODO Auto-generated method stub
-		imgLayout.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				imgLayout.setVisibility(View.GONE);
-			}
-		});
+		imgLayout.setOnClickListener(clickListener);
+		helpLayout.setOnClickListener(clickListener);
 	}
+	private OnClickListener clickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			if(v.getId() == imgLayout.getId()) {
+				imgLayout.setVisibility(View.GONE);
+			}else if(v.getId() == helpLayout.getId()) {
+				helpLayout.setVisibility(View.GONE);
+			}
+		}
+	};
+	
 	private class TaskGetXmlfromUrl extends AsyncTask<Void, Void, String>
 	{
 
@@ -189,7 +208,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 	class TaskDownloadEpub extends AsyncTask<String, String, String> {
 		BooksHomeListItems singleItem;
 		ProgressDialog downDialog;
-		
+
 		private boolean isCancelled = false;
 
 		public TaskDownloadEpub(BooksHomeListItems singleItem) {
@@ -304,7 +323,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 	public void showOkCancel(final String filePath, final int from, final BooksHomeListItems singleItem) {	// from = 1 --> request to OpenBook
 		// TODO Auto-generated method stub																													// from = 2 --> request to start download
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-		
+
 		alertDialog.setTitle(getResources().getString(R.string.app_name));
 
 		if(from == 1) {
@@ -373,7 +392,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			startActivity(i);
 		}
 	}
-	
+
 	@Override
 	public void BookIconPressed(final View v, String bookImage) {
 		imgLayout.setVisibility(View.VISIBLE);
@@ -390,7 +409,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		});
 	}
 
-/*	@SuppressLint("NewApi")
+	/*	@SuppressLint("NewApi")
 	@Override
 	public void BookIconPressed(final View v, String bookImage) {
 		// TODO Auto-generated method stub
