@@ -22,7 +22,6 @@
     <string name="check_connection">இந்த பயன்பாட்டை பயன்படுத்த உங்கள் இணைய இணைப்பை சரிபார்க்கவும்</string>
     <string name="no_data">புத்தகங்கள் ஏதுமில்லை</string>
     
-    <string name="new_relic_key">AA3beba3a57cfaf7192a26d14229084d20f40d355c</string>
     <string name="txt_exit">வெளியேற மீண்டும் அழுத்தவும்</string>
 
     <string-array name="menu_items">
