@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:background="@color/commun_red"
             android:cacheColorHint="@android:color/transparent"
-            android:listSelector="#FF7700" >
+            android:listSelector="@color/menu_selector" >
         </ListView>
     </LinearLayout>
 
@@ -34,7 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/commun_red"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="visible" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -68,10 +69,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:visibility="invisible"
                     android:contentDescription="@string/imageview"
-                    android:src="@drawable/ic_menu" />
-
+                    android:src="@drawable/ic_menu"
+                    android:visibility="invisible" />
             </RelativeLayout>
         </LinearLayout>
         <!-- This is where fragment will show up -->
@@ -85,9 +85,11 @@
                 android:id="@+id/activity_main_content_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white" >
+                android:background="@color/white"
+                android:visibility="visible" >
             </FrameLayout>
         </LinearLayout>
+
     </LinearLayout>
 
 </com.jskaleel.fte.layout.MainLayout>

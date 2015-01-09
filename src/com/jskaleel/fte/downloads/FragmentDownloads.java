@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.jskaleel.fte.R;
 import com.jskaleel.fte.common.BasicFragment;
 import com.jskaleel.fte.common.PrintLog;
-import com.jskaleel.fte.home.BooksHomeListItems;
 
 public class FragmentDownloads extends BasicFragment {
 
@@ -88,11 +87,12 @@ public class FragmentDownloads extends BasicFragment {
 
 			if(!file.isHidden() && file.canRead()){
 				path.add(file.getPath());
-				if(file.isDirectory()){
-					item.add(file.getName() + "/");
-				}else{
+				if(!file.isDirectory()){
+					//					item.add(file.getName() + "/");
 					item.add(file.getName());
-				}
+				}/*else{
+					item.add(file.getName());
+				}*/
 			}	
 		}
 		if(item.size() != 0) {
@@ -125,6 +125,7 @@ public class FragmentDownloads extends BasicFragment {
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.setDataAndType(Uri.fromFile(file), "application/epub");
 				ComponentName cn = new ComponentName("org.geometerplus.zlibrary.ui.android", "org.geometerplus.android.fbreader.FBReader");
+				//				ComponentName cn = new ComponentName("com.google.android.apps.books", "com.google.android.apps.books.app.UploadsActivityAlias");
 				intent.setComponent(cn);
 				try {
 					startActivity(intent);
@@ -132,7 +133,7 @@ public class FragmentDownloads extends BasicFragment {
 					showOkCancel();
 				}
 			}else {
-				showAlertDialog("Invalid file format!!!");
+				showAlertDialog(getString(R.string.wrong_format));
 			}
 		}
 	}
@@ -157,16 +158,16 @@ public class FragmentDownloads extends BasicFragment {
 		});
 		alertDialog.show();
 	}
-	
+
 	private void downloadIt(String packageName) {
 		// TODO Auto-generated method stub
-		Uri uri = Uri.parse("market://search?q=" + packageName);
+		Uri uri = Uri.parse("market://search?q=" +packageName+".FBReader");
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
 		try {
 			startActivity(intent);
 		} catch (ActivityNotFoundException e) {
-			String url = "https://play.google.com/store/apps/details?id="+packageName;
+			String url = "https://play.google.com/store/apps/details?id="+packageName+".FBReader";
 			Intent i = new Intent(Intent.ACTION_VIEW);
 			i.setData(Uri.parse(url));
 			startActivity(i);

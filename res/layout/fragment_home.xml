@@ -20,7 +20,7 @@
             android:cacheColorHint="@android:color/transparent"
             android:divider="@color/commun_red"
             android:dividerHeight="5dp"
-            android:listSelector="@drawable/list_selector"
+            android:listSelector="@color/transperent"
             android:scrollbars="none"
             android:scrollingCache="false"
             android:smoothScrollbar="true"

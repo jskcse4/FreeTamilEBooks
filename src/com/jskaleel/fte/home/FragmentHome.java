@@ -15,15 +15,20 @@ import org.json.JSONObject;
 import org.json.XML;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,10 +38,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.jskaleel.fte.AppPreference;
 import com.jskaleel.fte.R;
 import com.jskaleel.fte.common.BasicFragment;
 import com.jskaleel.fte.common.ConnectionDetector;
@@ -250,8 +253,11 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 					if(!(path.exists()))
 						path.mkdir();
-
-					savedfilePath = path+"/"+singleItem.title+".epub";
+//					if(singleItem.title != null && singleItem.title.equalsIgnoreCase("")) {
+						savedfilePath = path+"/"+singleItem.title+".epub";				
+					/*}else {
+						savedfilePath = path+"/"+"no_name.epub";
+					}*/
 					OutputStream output = new FileOutputStream(savedfilePath);
 					byte data[] = new byte[1024];
 
@@ -290,7 +296,8 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			super.onPostExecute(filePath);
 			if(filePath != null){
 				downDialog.dismiss();
-				Toast.makeText(getActivity(), "File Saved at "+savedfilePath, Toast.LENGTH_LONG).show();
+//				Toast.makeText(getActivity(), "File Saved at "+savedfilePath, Toast.LENGTH_LONG).show();
+				methodNotify(savedfilePath);
 				showOkCancel(savedfilePath, 1, singleItem);
 			}
 		}
@@ -301,6 +308,17 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		// TODO Auto-generated method stub
 		final String url = Uri.parse(singleItem.epub).toString();
 		new TaskDownloadEpub(singleItem).execute(url);
+	}
+
+	public void methodNotify(String string) {
+		// TODO Auto-generated method stub
+		Notification noti = new NotificationCompat.Builder(getActivity())
+				.setContentTitle(getString(R.string.app_name))
+				.setAutoCancel(true)
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setContentText(getActivity().getString(R.string.file_saved)).build();
+				NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+				notificationManager.notify((int) System.currentTimeMillis(), noti);
 	}
 
 	@Override
@@ -380,13 +398,13 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 	private void downloadIt(String packageName) {
 		// TODO Auto-generated method stub
-		Uri uri = Uri.parse("market://search?q=" + packageName);
+		Uri uri = Uri.parse("market://search?q=" + packageName+".FBReader");
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
 		try {
 			startActivity(intent);
 		} catch (ActivityNotFoundException e) {
-			String url = "https://play.google.com/store/apps/details?id="+packageName;
+			String url = "https://play.google.com/store/apps/details?id="+packageName+".FBReader";
 			Intent i = new Intent(Intent.ACTION_VIEW);
 			i.setData(Uri.parse(url));
 			startActivity(i);
@@ -396,7 +414,11 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 	@Override
 	public void BookIconPressed(final View v, String bookImage) {
 		imgLayout.setVisibility(View.VISIBLE);
-		Picasso.with(getActivity()).load(bookImage).into(expandedImageView, new Callback() {
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int height = displaymetrics.heightPixels;
+		int width = displaymetrics.widthPixels;
+		Picasso.with(getActivity()).load(bookImage).resize(width, height).into(expandedImageView, new Callback() {
 			@Override
 			public void onSuccess() {
 				bookProgressBar.setVisibility(View.GONE);
@@ -408,118 +430,4 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			}
 		});
 	}
-
-	/*	@SuppressLint("NewApi")
-	@Override
-	public void BookIconPressed(final View v, String bookImage) {
-		// TODO Auto-generated method stub
-
-        // If there's an animation in progress, cancel it immediately and proceed with this one.
-        if (mCurrentAnimator != null) {
-            mCurrentAnimator.cancel();
-        }
-        Picasso.with(getActivity()).load(bookImage).into(expandedImageView, new Callback() {
-			@Override
-			public void onSuccess() {
-				// TODO Auto-generated method stub
-			}
-			@Override
-			public void onError() {
-				// TODO Auto-generated method stub
-				expandedImageView.setBackgroundResource(R.drawable.default_img);
-			}
-		});
-
-        final Rect startBounds = new Rect();
-        final Rect finalBounds = new Rect();
-        final Point globalOffset = new Point();
-
-        v.getGlobalVisibleRect(startBounds);
-        rootView.findViewById(R.id.container).getGlobalVisibleRect(finalBounds, globalOffset);
-        startBounds.offset(-globalOffset.x, -globalOffset.y);
-        finalBounds.offset(-globalOffset.x, -globalOffset.y);
-
-        float startScale;
-        if ((float) finalBounds.width() / finalBounds.height() > (float) startBounds.width() / startBounds.height()) {
-            startScale = (float) startBounds.height() / finalBounds.height();
-            float startWidth = startScale * finalBounds.width();
-            float deltaWidth = (startWidth - startBounds.width()) / 2;
-            startBounds.left -= deltaWidth;
-            startBounds.right += deltaWidth;
-        } else {
-            // Extend start bounds vertically
-            startScale = (float) startBounds.width() / finalBounds.width();
-            float startHeight = startScale * finalBounds.height();
-            float deltaHeight = (startHeight - startBounds.height()) / 2;
-            startBounds.top -= deltaHeight;
-            startBounds.bottom += deltaHeight;
-        }
-
-        v.setAlpha(0f);
-        expandedImageView.setVisibility(View.VISIBLE);
-
-        expandedImageView.setPivotX(0f);
-        expandedImageView.setPivotY(0f);
-
-        AnimatorSet set = new AnimatorSet();
-        set.play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left,finalBounds.left))
-                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top,finalBounds.top))
-                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X, startScale, 1f))
-                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_Y, startScale, 1f));
-        set.setDuration(mShortAnimationDuration);
-        set.setInterpolator(new DecelerateInterpolator());
-        set.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mCurrentAnimator = null;
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                mCurrentAnimator = null;
-            }
-        });
-        set.start();
-        mCurrentAnimator = set;
-
-        // Upon clicking the zoomed-in image, it should zoom back down to the original bounds
-        // and show the thumbnail instead of the expanded image.
-        final float startScaleFinal = startScale;
-        expandedImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCurrentAnimator != null) {
-                    mCurrentAnimator.cancel();
-                }
-
-                AnimatorSet set = new AnimatorSet();
-                set
-                        .play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left))
-                        .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top))
-                        .with(ObjectAnimator
-                                .ofFloat(expandedImageView, View.SCALE_X, startScaleFinal))
-                        .with(ObjectAnimator
-                                .ofFloat(expandedImageView, View.SCALE_Y, startScaleFinal));
-                set.setDuration(mShortAnimationDuration);
-                set.setInterpolator(new DecelerateInterpolator());
-                set.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        v.setAlpha(1f);
-                        expandedImageView.setVisibility(View.GONE);
-                        mCurrentAnimator = null;
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        v.setAlpha(1f);
-                        expandedImageView.setVisibility(View.GONE);
-                        mCurrentAnimator = null;
-                    }
-                });
-                set.start();
-                mCurrentAnimator = set;
-            }
-        });
-	}*/
 }

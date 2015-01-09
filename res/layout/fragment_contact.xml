@@ -1,104 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="10dp"
+    android:scrollbars="none"
     android:tag="Contacts" >
 
-    <LinearLayout
-        android:id="@+id/nameField"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:weightSum="2" >
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/nameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:weightSum="2" >
+
+            <EditText
+                android:id="@+id/edtFName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_border"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/firstname"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:padding="8dp"
+                android:singleLine="true" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/white_layout_bg" />
+
+            <EditText
+                android:id="@+id/edtLName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_border"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/lastname"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:padding="8dp"
+                android:singleLine="true" />
+        </LinearLayout>
 
         <EditText
-            android:id="@+id/edtFName"
-            android:layout_width="wrap_content"
+            android:id="@+id/edtMail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_below="@+id/nameField"
             android:background="@drawable/edittext_border"
             android:ems="10"
             android:gravity="center"
-            android:hint="@string/firstname"
+            android:hint="@string/your_email"
             android:imeOptions="actionNext"
-            android:inputType="text"
-            android:padding="8dp"
-            android:singleLine="true" />
-
-        <View
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/white_layout_bg" />
+            android:inputType="textEmailAddress"
+            android:padding="8dp" />
 
         <EditText
-            android:id="@+id/edtLName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:id="@+id/edtMessage"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_below="@+id/edtMail"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edittext_border"
             android:ems="10"
-            android:gravity="center"
-            android:hint="@string/lastname"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:padding="8dp"
-            android:singleLine="true" />
-    </LinearLayout>
+            android:gravity="top"
+            android:hint="@string/your_message"
+            android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/edtMail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/nameField"
-        android:background="@drawable/edittext_border"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="@string/your_email"
-        android:imeOptions="actionNext"
-        android:inputType="textEmailAddress"
-        android:padding="8dp" />
-
-    <EditText
-        android:id="@+id/edtMessage"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_below="@+id/edtMail"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_border"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="@string/your_message"
-        android:imeOptions="actionDone"
-        android:inputType="textMultiLine"
-        android:padding="8dp" />
-
-    <LinearLayout
-        android:id="@+id/submitField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edtMessage"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:gravity="right"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/submitField"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/commun_red"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            android:text="@string/submit"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_below="@+id/edtMessage"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="right"
+            android:orientation="horizontal" >
 
-</RelativeLayout>
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_selector"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

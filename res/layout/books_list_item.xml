@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_layout_bg" >
+    android:background="@color/white" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,13 +15,13 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@color/commun_red"
+            android:background="@drawable/button_selector"
             android:paddingBottom="10dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
             android:text="@string/download"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <Button
@@ -31,13 +31,13 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/btnDown"
             android:layout_marginTop="5dp"
-            android:background="@color/commun_red"
+            android:background="@drawable/button_selector"
             android:paddingBottom="10dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
             android:text="@string/open"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textStyle="bold" />
     </RelativeLayout>
 

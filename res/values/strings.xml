@@ -47,5 +47,9 @@
     <string name="mail_alert">மின்னஞ்சல் காலியாக இருக்கக் கூடாது</string>
     <string name="nomail_alert">சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்!!!</string>
     <string name="message_alert">உங்கள் கருத்தை உள்ளிடவும்</string>
+    <string name="wrong_format">தவறான கோப்பு வடிவம்!!!</string>
+    
+    
+    <string name="file_saved">File saved in your SD card...</string>
    
 </resources>

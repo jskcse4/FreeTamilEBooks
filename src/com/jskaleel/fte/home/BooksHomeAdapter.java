@@ -122,7 +122,9 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 //						StaticAquery.loadProfileImage(context, holder.ivBookIcon, holder.ivProgress, singleItem.image);
 			//			holder.ivProgress.setBackgroundResource(R.drawable.default_img);
 //			new ImageDownloaderTask(holder.ivBookIcon, holder.ivProgress).execute(singleItem.image);
-			Picasso.with(context).load(singleItem.image).into(holder.ivBookIcon, new Callback() {
+			int width	=	FTEDevice.convertDpToPx(80, context);
+			int height	=	FTEDevice.convertDpToPx(100, context);
+			Picasso.with(context).load(singleItem.image).resize(width, height).into(holder.ivBookIcon, new Callback() {
 				@Override
 				public void onSuccess() {
 					// TODO Auto-generated method stub
