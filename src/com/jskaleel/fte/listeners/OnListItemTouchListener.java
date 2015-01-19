@@ -1,4 +1,4 @@
-package com.jskaleel.fte.common;
+package com.jskaleel.fte.listeners;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;

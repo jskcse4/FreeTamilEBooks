@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.jskaleel.abstracts.BasicFragment;
 import com.jskaleel.fte.R;
-import com.jskaleel.fte.common.BasicFragment;
 
 public class FragmentContact extends BasicFragment {
 	
@@ -28,8 +28,7 @@ public class FragmentContact extends BasicFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_contact, null);
 
 		init(view);

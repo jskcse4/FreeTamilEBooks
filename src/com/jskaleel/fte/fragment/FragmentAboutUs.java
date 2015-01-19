@@ -3,24 +3,22 @@ package com.jskaleel.fte.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.jskaleel.abstracts.BasicFragment;
 import com.jskaleel.fte.MainActivity;
 import com.jskaleel.fte.R;
-import com.jskaleel.fte.common.BasicFragment;
 
 public class FragmentAboutUs extends BasicFragment {
 
 	private WebView webView;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_webview, null);
 
 		init(view);

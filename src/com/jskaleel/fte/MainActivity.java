@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity {
 	private String[] locMenuItems;
 
 	// Menu button
-	ImageView btMenu;
+	ImageView btMenu, btSearch;
 
 	// Title according to fragment
 	TextView tvTitle;
@@ -132,6 +132,8 @@ public class MainActivity extends FragmentActivity {
 				toggleMenu(v);
 			}
 		});
+		
+		btSearch	=	(ImageView) findViewById(R.id.ivSearchButton);
 
 		// Get title textview
 		tvTitle = (TextView) findViewById(R.id.activity_main_content_title);
@@ -177,20 +179,26 @@ public class MainActivity extends FragmentActivity {
 
 
 		if(selectedItem.compareTo("Home") == 0) {
+			btSearch.setVisibility(View.VISIBLE);
 			fragment = new FragmentHome();
 		} else if(selectedItem.compareTo("About Us") == 0) {
+			btSearch.setVisibility(View.GONE);
 			setFragmentType(1);
 			fragment = new FragmentAboutUs();
 		} else if(selectedItem.compareTo("Contributors") == 0) {
+			btSearch.setVisibility(View.GONE);
 			setFragmentType(2);
 			fragment = new FragmentAboutUs();
 			//			fragment = new FragmentContributors();
 		} else if(selectedItem.compareTo("Publish") == 0) {
+			btSearch.setVisibility(View.GONE);
 			setFragmentType(3);
 			fragment = new FragmentAboutUs();
 		}else if(selectedItem.compareTo("Contacts") == 0) {
+			btSearch.setVisibility(View.GONE);
 			fragment = new FragmentContact();
 		}else if(selectedItem.compareTo("Downloads") == 0) {
+			btSearch.setVisibility(View.GONE);
 			fragment = new FragmentDownloads();
 		}
 

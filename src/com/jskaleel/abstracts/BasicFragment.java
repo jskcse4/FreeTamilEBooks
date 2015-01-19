@@ -1,4 +1,4 @@
-package com.jskaleel.fte.common;
+package com.jskaleel.abstracts;
 
 
 import android.app.AlertDialog;
@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
+
+import com.jskaleel.fte.common.UIProgressLoading;
 
 public class BasicFragment extends Fragment{
 
@@ -114,8 +116,7 @@ public class BasicFragment extends Fragment{
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
-				getActivity().finish();
-
+//				getActivity().finish();
 			}
 		});
 		alertDialogBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
@@ -124,8 +125,7 @@ public class BasicFragment extends Fragment{
 			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
 				if(keyCode == KeyEvent.KEYCODE_BACK){
 					dialog.dismiss();
-					getActivity().finish();
-
+//					getActivity().finish();
 				}
 				return false;
 			}

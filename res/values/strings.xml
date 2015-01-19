@@ -50,6 +50,14 @@
     <string name="wrong_format">தவறான கோப்பு வடிவம்!!!</string>
     
     
-    <string name="file_saved">File saved in your SD card...</string>
+    <string name="search">தேடு</string>
+    <string name="file_saved">File saved in your SD card&#8230;</string>
+
+    <string name="nodatafound">இணைய இணைப்பு இல்லை</string>
+
+    <string name="by_author">By Author</string>
+    <string name="by_title">By Title</string>
+
+    
    
 </resources>

@@ -28,23 +28,31 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jskaleel.abstracts.BasicFragment;
+import com.jskaleel.fte.MainActivity;
 import com.jskaleel.fte.R;
-import com.jskaleel.fte.common.BasicFragment;
 import com.jskaleel.fte.common.ConnectionDetector;
 import com.jskaleel.fte.common.FTEDevice;
 import com.jskaleel.fte.common.PrintLog;
+import com.jskaleel.fte.listeners.HomeItemListener;
 import com.jskaleel.http.HttpGetUrlConnection;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -66,17 +74,39 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 	private String savedfilePath;
 
-	/*    private int mShortAnimationDuration;
-    private Animator mCurrentAnimator;*/
 
 	private ImageView expandedImageView;
 	private RelativeLayout imgLayout;
 	private ProgressBar bookProgressBar;
-	
+
 	private RelativeLayout helpLayout;
 
-	public FragmentHome() {
+	//Search Layout
+	private RelativeLayout searchLayout;
+	private RadioGroup searchRadioGroup;
+	private RadioButton rdAuthor, rdTitle;
+	private EditText edtSearchText;
+
+	private ImageView ivSearch;
+	private MainActivity mainActivity;
+	private int visibilityMode;
+	private TextView txtNoResult;
+
+	/**
+	 * @return the visibilityMode
+	 */
+	public int getVisibilityMode() {
+		return visibilityMode;
 	}
+
+	/**
+	 * @param visibilityMode the visibilityMode to set
+	 */
+	public void setVisibilityMode(int visibilityMode) {
+		this.visibilityMode = visibilityMode;
+	}
+
+	public FragmentHome() {	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,18 +115,15 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 		connectionDetector = new ConnectionDetector(getActivity());
 		isInternetAvailable = connectionDetector.isConnectingToInternet();
+
+		init(savedInstanceState);
+		setupDefaults();
+		setupEvents();
 		
-		if(isInternetAvailable) {
-			init();
-			setupDefaults();
-			setupEvents();
-		} else{
-			showInternetAvailabilityAlertDialog(getResources().getString(R.string.check_connection));
-		}
 		return rootView;
 	}
 
-	private void init() {
+	private void init(Bundle savedInstanceState) {
 
 		listView = (ListView) rootView.findViewById(R.id.fragment_listview);
 
@@ -108,11 +135,20 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		bookListArray			=	new ArrayList<BooksHomeListItems>();
 		booksHomeAdapter	=	new BooksHomeAdapter(bookListArray, FragmentHome.this, getActivity());
 		booksHomeAdapter.setListItemListener(FragmentHome.this);
-		
+
 		helpLayout	=	(RelativeLayout) rootView.findViewById(R.id.helpLayout);
 
-		// Retrieve and cache the system's default "short" animation time.
-		//        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+		//Search Layout
+		searchLayout	=	(RelativeLayout) rootView.findViewById(R.id.searchLayout);
+		searchRadioGroup = (RadioGroup) rootView.findViewById(R.id.searchRadioGroup);
+		rdAuthor = (RadioButton) rootView.findViewById(R.id.rdAuthor);
+		rdTitle = (RadioButton) rootView.findViewById(R.id.rdTitle);
+		edtSearchText	=	(EditText) rootView.findViewById(R.id.edtSearch);
+
+		mainActivity	=	(MainActivity) getActivity();
+		ivSearch	= (ImageView)	mainActivity.findViewById(R.id.ivSearchButton);
+		
+		txtNoResult	=	(TextView) rootView.findViewById(R.id.txtNoResult);
 	}
 
 	private void setupDefaults() {
@@ -122,16 +158,67 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			helpLayout.setVisibility(View.VISIBLE);
 			FTEDevice.getUserPrefs(getActivity()).setIsOpenFirstTime(false);
 		}
-		
+		txtNoResult.setVisibility(View.GONE);
+
 		imgLayout.setVisibility(View.GONE);
-		new TaskGetXmlfromUrl().execute();
+		searchLayout.setVisibility(View.GONE);
+		ivSearch.setVisibility(View.VISIBLE);
+		if(isInternetAvailable) {
+			new TaskGetXmlfromUrl().execute();
+		} else{			
+			showInternetAvailabilityAlertDialog(getResources().getString(R.string.check_connection));
+			txtNoResult.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private void setupEvents() {
 		// TODO Auto-generated method stub
 		imgLayout.setOnClickListener(clickListener);
 		helpLayout.setOnClickListener(clickListener);
+		ivSearch.setOnClickListener(clickListener);
+		
+		edtSearchText.addTextChangedListener(searchTextListener);
+		
+		rdAuthor.setOnClickListener(radioClickListener);
+		rdTitle.setOnClickListener(radioClickListener);
 	}
+	
+	private OnClickListener radioClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			int selectedId = searchRadioGroup.getCheckedRadioButtonId();
+			if(selectedId == rdAuthor.getId()) {
+				String text = edtSearchText.getText().toString();
+				booksHomeAdapter.filter(text, 1);
+			}else if(selectedId == rdTitle.getId()) {
+				String text = edtSearchText.getText().toString();
+				booksHomeAdapter.filter(text, 2);
+			}
+		}
+	};
+	
+	private TextWatcher searchTextListener = new TextWatcher() {
+		
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {	
+			String text = edtSearchText.getText().toString();
+			int selectedId = searchRadioGroup.getCheckedRadioButtonId();
+			if(selectedId == rdAuthor.getId()) {			//search by author
+				booksHomeAdapter.filter(text, 1);				
+			}else if(selectedId == rdTitle.getId()) {			//search by title
+				booksHomeAdapter.filter(text, 2);
+			}
+		}
+		
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {		}
+		
+		@Override
+		public void afterTextChanged(Editable s) {		}
+	};
+	
 	private OnClickListener clickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -140,10 +227,20 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 				imgLayout.setVisibility(View.GONE);
 			}else if(v.getId() == helpLayout.getId()) {
 				helpLayout.setVisibility(View.GONE);
+			}else if(v.getId() == ivSearch.getId()) {
+				if(getVisibilityMode() == 1) {
+					setVisibilityMode(0);
+					searchLayout.setVisibility(View.GONE);	
+					PrintLog.debug(TAG, "Visibility-->1"+searchLayout.getVisibility());
+				}else if(getVisibilityMode() == 0) {
+					setVisibilityMode(1);
+					searchLayout.setVisibility(View.VISIBLE);
+					PrintLog.debug(TAG, "Visibility-->2"+searchLayout.getVisibility());
+				}
 			}
 		}
 	};
-	
+
 	private class TaskGetXmlfromUrl extends AsyncTask<Void, Void, String>
 	{
 
@@ -160,6 +257,10 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				getActivity().finish();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				getActivity().finish();
 			}
 			return null;
 		}
@@ -253,8 +354,8 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 					if(!(path.exists()))
 						path.mkdir();
-//					if(singleItem.title != null && singleItem.title.equalsIgnoreCase("")) {
-						savedfilePath = path+"/"+singleItem.title+".epub";				
+					//					if(singleItem.title != null && singleItem.title.equalsIgnoreCase("")) {
+					savedfilePath = path+"/"+singleItem.title+".epub";				
 					/*}else {
 						savedfilePath = path+"/"+"no_name.epub";
 					}*/
@@ -296,7 +397,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			super.onPostExecute(filePath);
 			if(filePath != null){
 				downDialog.dismiss();
-//				Toast.makeText(getActivity(), "File Saved at "+savedfilePath, Toast.LENGTH_LONG).show();
+				//				Toast.makeText(getActivity(), "File Saved at "+savedfilePath, Toast.LENGTH_LONG).show();
 				methodNotify(savedfilePath);
 				showOkCancel(savedfilePath, 1, singleItem);
 			}
@@ -313,12 +414,12 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 	public void methodNotify(String string) {
 		// TODO Auto-generated method stub
 		Notification noti = new NotificationCompat.Builder(getActivity())
-				.setContentTitle(getString(R.string.app_name))
-				.setAutoCancel(true)
-				.setSmallIcon(R.drawable.ic_launcher)
-				.setContentText(getActivity().getString(R.string.file_saved)).build();
-				NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-				notificationManager.notify((int) System.currentTimeMillis(), noti);
+		.setContentTitle(getString(R.string.app_name))
+		.setAutoCancel(true)
+		.setSmallIcon(R.drawable.ic_launcher)
+		.setContentText(getActivity().getString(R.string.file_saved)).build();
+		NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.notify((int) System.currentTimeMillis(), noti);
 	}
 
 	@Override

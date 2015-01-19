@@ -6,10 +6,70 @@
     android:background="@android:color/white"
     android:padding="5dp" >
 
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/book_layout_back"
+        android:visibility="visible" >
+
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ivSearchicon"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:layout_toLeftOf="@+id/ivSearchicon"
+            android:background="@drawable/edittext_border"
+            android:ems="10"
+            android:hint="Search"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:padding="10dp" />
+
+        <RadioGroup
+            android:id="@+id/searchRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/edtSearch"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" >
+
+            <RadioButton
+                android:id="@+id/rdAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:button="@drawable/radiobackground"
+                android:checked="true"
+                android:padding="5dp"
+                android:text="@string/by_author"
+                android:textColor="@color/txtAuthorColor" />
+
+            <RadioButton
+                android:id="@+id/rdTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:button="@drawable/radiobackground"
+                android:padding="5dp"
+                android:text="@string/by_title"
+                android:textColor="@color/txtAuthorColor" />
+        </RadioGroup>
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/listLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/searchLayout"
         android:visibility="visible" >
 
         <ListView
@@ -31,16 +91,16 @@
         android:id="@+id/imgLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        android:background="@color/book_layout_back" >
+        android:background="@color/book_layout_back"
+        android:visibility="visible" >
 
         <ImageView
             android:id="@+id/expanded_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
-            android:scaleType="fitXY"
-            android:contentDescription="@string/imageview" />
+            android:contentDescription="@string/imageview"
+            android:scaleType="fitXY" />
 
         <ProgressBar
             android:id="@+id/bookProgressBar"
@@ -48,26 +108,40 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
-        
     </RelativeLayout>
-    
+
     <RelativeLayout
         android:id="@+id/helpLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/book_layout_back" >
+        android:background="@color/book_layout_back"
+        android:visibility="visible" >
+
         <TextView
             android:id="@+id/txtSwipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:gravity="center"
-            android:textSize="19sp"
             android:drawableLeft="@drawable/left"
+            android:drawableStart="@drawable/left"
             android:drawableRight="@drawable/right"
-            android:textStyle="italic"
+            android:drawableEnd="@drawable/right"
+            android:gravity="center"
+            android:text="Swipe on listview to get download \n and open options"
             android:textColor="@color/white"
-            android:text="Swipe on listview to get download \n and open options" />
+            android:textSize="19sp"
+            android:textStyle="italic" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txtNoResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/nodatafound"
+        android:textColor="@color/commun_red"
+        android:textSize="18sp"
+        android:textStyle="italic" />
 
 </RelativeLayout>

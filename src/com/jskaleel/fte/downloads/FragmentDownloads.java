@@ -18,8 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jskaleel.abstracts.BasicFragment;
 import com.jskaleel.fte.R;
-import com.jskaleel.fte.common.BasicFragment;
 import com.jskaleel.fte.common.PrintLog;
 
 public class FragmentDownloads extends BasicFragment {

@@ -21,8 +21,10 @@ import android.widget.TextView;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.jskaleel.fte.R;
 import com.jskaleel.fte.common.FTEDevice;
-import com.jskaleel.fte.common.OnListItemTouchListener;
+import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.fte.common.TouchHighlightImageView;
+import com.jskaleel.fte.listeners.HomeItemListener;
+import com.jskaleel.fte.listeners.OnListItemTouchListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +32,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 
 	private Context context;
 	private ArrayList<BooksHomeListItems> bookListArray;
+	private ArrayList<BooksHomeListItems> searchListArray;
 	private FragmentHome fragmentHome;
 	private Typeface tf;
 
@@ -42,7 +45,8 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 		this.bookListArray	=	bookListArray;
 		this.fragmentHome	=	fragmentHome;
 		this.context				=	context;
-
+		searchListArray = new ArrayList<BooksHomeListItems>();	
+		this.searchListArray.addAll(bookListArray);
 		SwipeLength				= FTEDevice.convertDpToPx(110, context);
 	}
 
@@ -119,9 +123,9 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 		}
 
 		if(singleItem.image != null && !singleItem.image.equalsIgnoreCase("")) {
-//						StaticAquery.loadProfileImage(context, holder.ivBookIcon, holder.ivProgress, singleItem.image);
+			//						StaticAquery.loadProfileImage(context, holder.ivBookIcon, holder.ivProgress, singleItem.image);
 			//			holder.ivProgress.setBackgroundResource(R.drawable.default_img);
-//			new ImageDownloaderTask(holder.ivBookIcon, holder.ivProgress).execute(singleItem.image);
+			//			new ImageDownloaderTask(holder.ivBookIcon, holder.ivProgress).execute(singleItem.image);
 			int width	=	FTEDevice.convertDpToPx(80, context);
 			int height	=	FTEDevice.convertDpToPx(100, context);
 			Picasso.with(context).load(singleItem.image).resize(width, height).into(holder.ivBookIcon, new Callback() {
@@ -271,7 +275,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 				}
 			}
 		});
-		
+
 		holder.ivBookIcon.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -311,4 +315,32 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {	}
+
+	// Filter Class
+	public void filter(String charText, int type) {
+		if(charText == null) {
+			charText = "";
+		}
+		bookListArray.clear();
+		if (charText.length() == 0) {
+			bookListArray.addAll(searchListArray);
+		} else {
+			for (BooksHomeListItems tempBooks : searchListArray) {
+				if(type == 1) {
+					PrintLog.debug("SearchResult", "-->Author");
+					if (tempBooks.getAuthor().contains(charText)) {
+						bookListArray.add(tempBooks);
+					}
+				}else if(type == 2) {
+					if(tempBooks.getTitle() != null) {
+						PrintLog.debug("SearchResult", "-->Title");
+						if (tempBooks.getTitle().contains(charText)) {
+							bookListArray.add(tempBooks);
+						}
+					}
+				}
+			}
+		}
+		notifyDataSetChanged();
+	}
 }

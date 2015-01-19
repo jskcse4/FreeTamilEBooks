@@ -1,10 +1,14 @@
-package com.jskaleel.fte.common;
+package com.jskaleel.abstracts;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+
+import com.jskaleel.fte.common.ConnectionDetector;
+import com.jskaleel.fte.common.PrintLog;
+import com.jskaleel.fte.common.UIProgressLoading;
 
 public class BasicActivity extends FragmentActivity{
 
