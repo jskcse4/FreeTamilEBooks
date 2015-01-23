@@ -84,7 +84,6 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// Inflate the mainLayout
 		mainLayout = (MainLayout)this.getLayoutInflater().inflate(R.layout.activity_main, null);
 		setContentView(mainLayout);

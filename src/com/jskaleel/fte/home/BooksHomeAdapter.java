@@ -18,15 +18,18 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageContainer;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.android.volley.toolbox.NetworkImageView;
 import com.jskaleel.fte.R;
+import com.jskaleel.fte.app.FTEApplication;
 import com.jskaleel.fte.common.FTEDevice;
 import com.jskaleel.fte.common.PrintLog;
-import com.jskaleel.fte.common.TouchHighlightImageView;
 import com.jskaleel.fte.listeners.HomeItemListener;
 import com.jskaleel.fte.listeners.OnListItemTouchListener;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 
@@ -41,12 +44,15 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 	private HomeItemListener homeItemListener;	
 	private int selectedPos=0;
 
+	private ImageLoader imgLoader;
+
 	public BooksHomeAdapter(ArrayList<BooksHomeListItems> bookListArray, FragmentHome fragmentHome, Context context) {
 		this.bookListArray	=	bookListArray;
 		this.fragmentHome	=	fragmentHome;
 		this.context				=	context;
 		searchListArray = new ArrayList<BooksHomeListItems>();	
 		this.searchListArray.addAll(bookListArray);
+		this.imgLoader	=	FTEApplication.getInstance().getImageLoader();
 		SwipeLength				= FTEDevice.convertDpToPx(110, context);
 	}
 
@@ -91,7 +97,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 
 			holder.txtBookTitle			= (TextView) layout.findViewById(R.id.txtTitle);
 			holder.txtAuthorName		= (TextView) layout.findViewById(R.id.txtAuthor);
-			holder.ivBookIcon				=	(TouchHighlightImageView) layout.findViewById(R.id.ivBookImage);
+			holder.ivBookIcon				=	(NetworkImageView) layout.findViewById(R.id.ivBookImage);
 			holder.ivProgress				=	(ProgressBar) layout.findViewById(R.id.ivProgress);
 			holder.btnShare			=	(Button) layout.findViewById(R.id.btnDownload);
 
@@ -99,12 +105,14 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 			holder.btnDownload				=	(Button) layout.findViewById(R.id.btnDown);
 			holder.btnOpen					=	(Button) layout.findViewById(R.id.btnOpen);
 
+
 			layout.setTag(holder);
 		}else {
 			layout = (RelativeLayout) convertView;
 			holder = (ItemViewHolder) layout.getTag();
 		}
-		tf = Typeface.createFromAsset(context.getAssets(), "fonts/TMOTNMBI_SHIP.TTF");
+		tf = Typeface.createFromAsset(context.getAssets(), "fonts/NotoSansTamil-Bold.ttf");
+
 
 		final BooksHomeListItems singleItem	=	bookListArray.get(position);
 
@@ -121,27 +129,32 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 		}else {
 			holder.txtAuthorName.setText("");
 		}
+		
+		if(singleItem.getBookImage() != null) {
+			holder.ivBookIcon.setImageUrl(singleItem.getBookImage(), imgLoader);
+			holder.ivProgress.setVisibility(View.GONE);			
+		}else {
+			holder.ivBookIcon.setBackgroundResource(R.drawable.default_img);
+			holder.ivProgress.setVisibility(View.GONE);
+		}
 
-		if(singleItem.image != null && !singleItem.image.equalsIgnoreCase("")) {
-			//						StaticAquery.loadProfileImage(context, holder.ivBookIcon, holder.ivProgress, singleItem.image);
-			//			holder.ivProgress.setBackgroundResource(R.drawable.default_img);
-			//			new ImageDownloaderTask(holder.ivBookIcon, holder.ivProgress).execute(singleItem.image);
+		/*if(singleItem.image != null && !singleItem.image.equalsIgnoreCase("")) {
 			int width	=	FTEDevice.convertDpToPx(80, context);
 			int height	=	FTEDevice.convertDpToPx(100, context);
 			Picasso.with(context).load(singleItem.image).resize(width, height).into(holder.ivBookIcon, new Callback() {
 				@Override
 				public void onSuccess() {
-					// TODO Auto-generated method stub
 					holder.ivProgress.setVisibility(View.GONE);
 				}
 				@Override
 				public void onError() {
-					// TODO Auto-generated method stub
-					holder.ivProgress.setBackgroundResource(R.drawable.default_img);
+					holder.ivBookIcon.setBackgroundResource(R.drawable.default_img);
 					holder.ivProgress.setVisibility(View.GONE);
 				}
 			});
-		}
+		}*/
+
+
 
 		if(!FTEDevice.PRE_HC_11)
 		{
@@ -276,16 +289,6 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 			}
 		});
 
-		holder.ivBookIcon.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if(homeItemListener != null) {
-					homeItemListener.BookIconPressed(v, singleItem.image);
-				}
-			}
-		});
-
 		holder.btnShare.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -297,7 +300,7 @@ public class BooksHomeAdapter extends BaseAdapter implements OnScrollListener {
 
 	public static class ItemViewHolder {
 		private TextView txtBookTitle, txtAuthorName;
-		private TouchHighlightImageView ivBookIcon;
+		private NetworkImageView ivBookIcon;
 		private ProgressBar ivProgress;
 		private Button btnShare;
 

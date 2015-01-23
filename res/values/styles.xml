@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -26,4 +26,20 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="redTheme">
+        <item name="android:background">#FE0405</item>
+        <item name="android:textColor">#040404</item>
+    </style>
+
+    <style name="blueTheme">
+        <item name="android:background">#4178BD</item>
+        <item name="android:textColor">#040404</item>
+    </style>
+
+    <style name="greenTheme">
+        <item name="android:background">#00AF00</item>
+        <item name="android:textColor">#040404</item>
+    </style>
+
 </resources>

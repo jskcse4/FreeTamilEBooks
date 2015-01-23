@@ -30,7 +30,6 @@ import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -54,8 +52,6 @@ import com.jskaleel.fte.common.FTEDevice;
 import com.jskaleel.fte.common.PrintLog;
 import com.jskaleel.fte.listeners.HomeItemListener;
 import com.jskaleel.http.HttpGetUrlConnection;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 public class FragmentHome extends BasicFragment implements HomeItemListener{
 
@@ -74,11 +70,6 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 	private String savedfilePath;
 
-
-	private ImageView expandedImageView;
-	private RelativeLayout imgLayout;
-	private ProgressBar bookProgressBar;
-
 	private RelativeLayout helpLayout;
 
 	//Search Layout
@@ -91,7 +82,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 	private MainActivity mainActivity;
 	private int visibilityMode;
 	private TextView txtNoResult;
-
+	
 	/**
 	 * @return the visibilityMode
 	 */
@@ -127,11 +118,6 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 		listView = (ListView) rootView.findViewById(R.id.fragment_listview);
 
-		// Load the high-resolution "zoomed-in" image.
-		imgLayout						=	(RelativeLayout) rootView.findViewById(R.id.imgLayout);
-		expandedImageView 	= (ImageView) rootView.findViewById(R.id.expanded_image);
-		bookProgressBar			=	(ProgressBar) rootView.findViewById(R.id.bookProgressBar);
-
 		bookListArray			=	new ArrayList<BooksHomeListItems>();
 		booksHomeAdapter	=	new BooksHomeAdapter(bookListArray, FragmentHome.this, getActivity());
 		booksHomeAdapter.setListItemListener(FragmentHome.this);
@@ -160,7 +146,6 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		}
 		txtNoResult.setVisibility(View.GONE);
 
-		imgLayout.setVisibility(View.GONE);
 		searchLayout.setVisibility(View.GONE);
 		ivSearch.setVisibility(View.VISIBLE);
 		if(isInternetAvailable) {
@@ -173,7 +158,6 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 
 	private void setupEvents() {
 		// TODO Auto-generated method stub
-		imgLayout.setOnClickListener(clickListener);
 		helpLayout.setOnClickListener(clickListener);
 		ivSearch.setOnClickListener(clickListener);
 		
@@ -223,9 +207,7 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if(v.getId() == imgLayout.getId()) {
-				imgLayout.setVisibility(View.GONE);
-			}else if(v.getId() == helpLayout.getId()) {
+			if(v.getId() == helpLayout.getId()) {
 				helpLayout.setVisibility(View.GONE);
 			}else if(v.getId() == ivSearch.getId()) {
 				if(getVisibilityMode() == 1) {
@@ -510,25 +492,5 @@ public class FragmentHome extends BasicFragment implements HomeItemListener{
 			i.setData(Uri.parse(url));
 			startActivity(i);
 		}
-	}
-
-	@Override
-	public void BookIconPressed(final View v, String bookImage) {
-		imgLayout.setVisibility(View.VISIBLE);
-		DisplayMetrics displaymetrics = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-		int height = displaymetrics.heightPixels;
-		int width = displaymetrics.widthPixels;
-		Picasso.with(getActivity()).load(bookImage).resize(width, height).into(expandedImageView, new Callback() {
-			@Override
-			public void onSuccess() {
-				bookProgressBar.setVisibility(View.GONE);
-			}
-			@Override
-			public void onError() {
-				expandedImageView.setBackgroundResource(R.drawable.default_img);
-				bookProgressBar.setVisibility(View.GONE);
-			}
-		});
 	}
 }

@@ -24,6 +24,90 @@ public class BooksHomeListItems  implements Serializable {
 	}
 
 	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	/**
+	 * @return the pdf
+	 */
+	public String getPdf() {
+		return pdf;
+	}
+
+	/**
+	 * @param pdf the pdf to set
+	 */
+	public void setPdf(String pdf) {
+		this.pdf = pdf;
+	}
+
+	/**
+	 * @return the epub
+	 */
+	public String getEpub() {
+		return epub;
+	}
+
+	/**
+	 * @param epub the epub to set
+	 */
+	public void setEpub(String epub) {
+		this.epub = epub;
+	}
+
+	/**
+	 * @return the link
+	 */
+	public String getLink() {
+		return link;
+	}
+
+	/**
+	 * @param link the link to set
+	 */
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	/**
+	 * @return the image
+	 */
+	public String getBookImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setBookImage(String image) {
+		this.image = image;
+	}
+
+	/**
+	 * @return the date
+	 */
+	public String getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	/**
 	 * @return the author
 	 */
 	public String getAuthor() {

@@ -88,29 +88,6 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/imgLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/book_layout_back"
-        android:visibility="visible" >
-
-        <ImageView
-            android:id="@+id/expanded_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:contentDescription="@string/imageview"
-            android:scaleType="fitXY" />
-
-        <ProgressBar
-            android:id="@+id/bookProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/helpLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
